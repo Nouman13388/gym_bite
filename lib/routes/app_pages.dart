@@ -9,7 +9,7 @@ import '../modules/splash/views/splash_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.CLIENT_DASHBOARD;
 
   static final routes = [
     GetPage(name: Routes.SPLASH, page: () => const SplashView()),
