@@ -20,7 +20,7 @@ class TrainerDashboardView extends GetView<DashboardController> {
               children: const [
                 Text(
                   "Welcome Trainer",
-                  style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 CircleAvatar(
                   backgroundColor: Colors.white24,
@@ -29,7 +29,7 @@ class TrainerDashboardView extends GetView<DashboardController> {
               ],
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 30),
 
             // Client List Card
             Container(
