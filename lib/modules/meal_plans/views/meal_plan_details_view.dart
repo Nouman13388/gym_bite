@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MealPlanDetails extends StatelessWidget {
-  const MealPlanDetails({super.key});
+class MealPlanDetailsView extends StatelessWidget {
+  const MealPlanDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ class MealPlanDetails extends StatelessWidget {
 void main() {
   runApp(
     const MaterialApp(
-      home: MealPlanDetails(),
+      home: MealPlanDetailsView(),
       debugShowCheckedModeBanner: false,
     ),
   );

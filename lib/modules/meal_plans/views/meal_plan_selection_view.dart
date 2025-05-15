@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'meal_plan_screen2.dart';
+import 'meal_plan_overview_view.dart';
 
-class MealPlanScreen1 extends StatelessWidget {
-  const MealPlanScreen1({super.key});
+class MealPlanSelectionView extends StatelessWidget {
+  const MealPlanSelectionView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,10 +40,7 @@ class MealPlanScreen1 extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.grey[900],
                 borderRadius: BorderRadius.circular(100),
-                border: Border.all(
-                  color: Colors.grey.shade600, // Grey border color
-                  width: 1.0, // Border width
-                ),
+                border: Border.all(color: Colors.grey.shade600, width: 1.0),
               ),
               child: Center(
                 child: IconButton(
@@ -53,15 +50,16 @@ class MealPlanScreen1 extends StatelessWidget {
                     size: 40,
                   ),
                   onPressed: () {
-                    //Navigator.push(
-                    //context,
-                    //MaterialPageRoute(builder: (context) => MealPlanScreen2()),
-                    //);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MealPlanOverviewView(),
+                      ),
+                    );
                   },
                 ),
               ),
             ),
-            SizedBox(height: 20),
           ],
         ),
       ),
@@ -72,7 +70,7 @@ class MealPlanScreen1 extends StatelessWidget {
 void main() {
   runApp(
     const MaterialApp(
-      home: MealPlanScreen1(),
+      home: MealPlanSelectionView(),
       debugShowCheckedModeBanner: false,
     ),
   );

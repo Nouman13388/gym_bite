@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'meal_plan_screen3.dart';
+import 'meal_plan_details_view.dart';
 
-void main() {
-  runApp(
-    const MaterialApp(
-      home: MealPlanScreen2(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}
-
-class MealPlanScreen2 extends StatelessWidget {
-  const MealPlanScreen2({super.key});
+class MealPlanOverviewView extends StatelessWidget {
+  const MealPlanOverviewView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +49,6 @@ class MealPlanScreen2 extends StatelessWidget {
           image: DecorationImage(
             image: AssetImage('assets/images/Meal_plan2.png'),
             fit: BoxFit.cover,
-            // add image here
           ),
         ),
       ),
@@ -74,12 +64,23 @@ class MealPlanScreen2 extends StatelessWidget {
         'view details',
         style: TextStyle(color: Colors.white54, fontSize: 14),
       ),
-      //onTap: () {
-      //Navigator.push(
-      //context,
-      //MaterialPageRoute(builder: (context) => MealPlanScreen3(planTitle: title)),
-      //);
-      //},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MealPlanDetailsView(),
+          ),
+        );
+      },
     );
   }
+}
+
+void main() {
+  runApp(
+    const MaterialApp(
+      home: MealPlanOverviewView(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
