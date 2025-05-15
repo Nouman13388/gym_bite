@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "480367101608",
+    "project_id": "gymbite",
+    "storage_bucket": "gymbite.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480367101608:android:e280049a5cc3657c16649d",
+        "android_client_info": {
+          "package_name": "com.nomdevs.gym_bite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4U_M7HsyF6RIPPq-R-rgQU5_29h5qmik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
