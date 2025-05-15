@@ -13,7 +13,9 @@ abstract class Routes {
   static const APPOINTMENTS = '/appointments';
   static const CHAT = '/chat';
   static const PROGRESS = '/progress';
-  static const MEAL_PLAN = '/meal-plan';
+  static const MEAL_PLAN_1 = '/meal-plan-1';
+  static const MEAL_PLAN_2 = '/meal-plan-2';
+  static const MEAL_PLAN_DETAILS = '/meal-plan-details';
 
   // Trainer routes
   static const TRAINER_DASHBOARD = '/trainer-dashboard';
