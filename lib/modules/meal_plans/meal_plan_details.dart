@@ -12,14 +12,16 @@ class MealPlanDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 50,),
+            SizedBox(height: 50),
             // Meal Plan Image
             Container(
               height: 320,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                  image: AssetImage('assets/images/Meal_plan1.png'), // replace with your image
+                  image: AssetImage(
+                    'assets/images/Meal_plan1.png',
+                  ), // replace with your image
                   fit: BoxFit.cover,
                 ),
               ),
@@ -38,10 +40,7 @@ class MealPlanDetails extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               'Diet Type: High Protein, Non-Vegetarian\nGoal: Muscle Gain – 2500 kcal/day',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
+              style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
             SizedBox(height: 24),
 
@@ -57,10 +56,7 @@ class MealPlanDetails extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               '3 scrambled eggs, 2 slices whole grain toast, 1 avocado, 1 banana, 1 glass of whole milk',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
+              style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
             SizedBox(height: 20),
 
@@ -76,10 +72,7 @@ class MealPlanDetails extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               'Grilled chicken breast (200g), brown rice (1 cup), steamed broccoli and carrots, olive oil dressing',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
+              style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
             SizedBox(height: 20),
 
@@ -95,10 +88,7 @@ class MealPlanDetails extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               'Grilled salmon (150g), quinoa (1/2 cup), sautéed spinach, sweet potato wedges (100g)',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
+              style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
             SizedBox(height: 30),
 
@@ -106,10 +96,7 @@ class MealPlanDetails extends StatelessWidget {
             Center(
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey.shade700,
-                    width: 1,
-                  ),
+                  border: Border.all(color: Colors.grey.shade700, width: 1),
                   borderRadius: BorderRadius.circular(22),
                 ),
                 child: TextButton(
@@ -125,10 +112,7 @@ class MealPlanDetails extends StatelessWidget {
                   },
                   child: Text(
                     'Select',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ),
@@ -138,4 +122,13 @@ class MealPlanDetails extends StatelessWidget {
       ),
     );
   }
+}
+
+void main() {
+  runApp(
+    const MaterialApp(
+      home: MealPlanDetails(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }

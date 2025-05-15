@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 //import 'meal_plan_screen3.dart';
 
+void main() {
+  runApp(
+    const MaterialApp(
+      home: MealPlanScreen2(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
+}
+
 class MealPlanScreen2 extends StatelessWidget {
   const MealPlanScreen2({super.key});
   @override
@@ -13,10 +22,14 @@ class MealPlanScreen2 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 60,),
+              SizedBox(height: 60),
               Text(
                 'Select your Meal plan',
-                style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 10),
               Text(
@@ -37,30 +50,35 @@ class MealPlanScreen2 extends StatelessWidget {
     return ListTile(
       leading: Container(
         padding: EdgeInsets.all(20),
-        width: 90, height: 80,
+        width: 90,
+        height: 80,
         decoration: BoxDecoration(
           color: Colors.grey.shade800,
           borderRadius: BorderRadius.circular(10),
-    image: DecorationImage(
-    image: AssetImage('assets/images/Meal_plan2.png'),
-    fit: BoxFit.cover,
-          // add image here
+          image: DecorationImage(
+            image: AssetImage('assets/images/Meal_plan2.png'),
+            fit: BoxFit.cover,
+            // add image here
+          ),
         ),
-      ),
       ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       subtitle: Text(
         'view details',
         style: TextStyle(color: Colors.white54, fontSize: 14),
       ),
       //onTap: () {
-        //Navigator.push(
-          //context,
-          //MaterialPageRoute(builder: (context) => MealPlanScreen3(planTitle: title)),
-        //);
+      //Navigator.push(
+      //context,
+      //MaterialPageRoute(builder: (context) => MealPlanScreen3(planTitle: title)),
+      //);
       //},
     );
   }
