@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../controllers/dashboard_controller.dart';
+import '../controllers/client_dashboard_controller.dart';
 
+class ClientDashboardBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<ClientDashboardController>(() => ClientDashboardController());
+  }
+}
 
-class ClientDashboardView extends GetView<DashboardController> {
+class ClientDashboardView extends GetView<ClientDashboardController> {
   const ClientDashboardView({super.key});
 
   @override
@@ -21,7 +28,11 @@ class ClientDashboardView extends GetView<DashboardController> {
               children: const [
                 Text(
                   "Welcome User",
-                  style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 CircleAvatar(
                   backgroundColor: Colors.white24,
@@ -32,41 +43,63 @@ class ClientDashboardView extends GetView<DashboardController> {
             const SizedBox(height: 20),
 
             // Fitness Score Card
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(169, 169, 169, 0.2),
-                border: Border.all(
-                  color: Colors.grey,  // Grey border color
-                  width: 1.0,          // Border width
+            Obx(
+              () => Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(169, 169, 169, 0.2),
+                  border: Border.all(
+                    color: Colors.grey, // Grey border color
+                    width: 1.0, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-              children: [
-                  Image.asset(
-                    'assets/images/Monotone add.png', // Replace with your image path
-                    width: 24,
-                    height: 24,
-                  ),
-                  SizedBox(width: 8),
-                  const Text("82.5",
-                      style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold))]),
-                  const Text("Your Fitness Score", style: TextStyle(color: Colors.white)),
-                  const SizedBox(height: 12),
-                  SizedBox(height: 100, child: LineChart(_lineChartData())),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text("-12% vs last week", style: TextStyle(color: Colors.red)),
-                      Text("💡 8 suggestions", style: TextStyle(color: Colors.amber)),
-                    ],
-                  ),
-                ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/Monotone add.png', // Replace with your image path
+                          width: 24,
+                          height: 24,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          "${controller.fitnessScore}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      "Your Fitness Score",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      height: 100,
+                      child: LineChart(_lineChartData(controller)),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${controller.fitnessScoreChange}% vs last week",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        Text(
+                          "💡 ${controller.suggestions} suggestions",
+                          style: TextStyle(color: Colors.amber),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
 
@@ -84,10 +117,18 @@ class ClientDashboardView extends GetView<DashboardController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("2300 Kcalories spend",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  const Text(
+                    "2300 Kcalories spend",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(height: 12),
-                  SizedBox(height: 100, child: BarChart(_barChartData())),
+                  SizedBox(
+                    height: 100,
+                    child: BarChart(_barChartData(controller)),
+                  ),
                 ],
               ),
             ),
@@ -110,16 +151,22 @@ class ClientDashboardView extends GetView<DashboardController> {
                     top: 10,
                     left: 10,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: Color(0xFF21AEC7),
                         border: Border.all(
-                          color: Colors.grey,  // Grey border color
-                          width: 1.0,          // Border width
+                          color: Colors.grey, // Grey border color
+                          width: 1.0, // Border width
                         ),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Text("Upper Body", style: TextStyle(color: Colors.white)),
+                      child: const Text(
+                        "Upper Body",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                   Positioned(
@@ -127,7 +174,10 @@ class ClientDashboardView extends GetView<DashboardController> {
                     left: 12,
                     child: const Text(
                       "Workout Plans\n⏱ 50 min",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const Positioned(
@@ -144,7 +194,7 @@ class ClientDashboardView extends GetView<DashboardController> {
     );
   }
 
-  LineChartData _lineChartData() {
+  LineChartData _lineChartData(ClientDashboardController controller) {
     return LineChartData(
       gridData: FlGridData(show: false),
       titlesData: FlTitlesData(
@@ -172,39 +222,33 @@ class ClientDashboardView extends GetView<DashboardController> {
       lineBarsData: [
         LineChartBarData(
           isCurved: true,
-          spots: [
-            FlSpot(0, 50),
-            FlSpot(1, 80),
-            FlSpot(2, 60),
-            FlSpot(3, 100),
-            FlSpot(4, 70),
-            FlSpot(5, 60),
-            FlSpot(6, 50),
-          ],
+          spots: List.generate(
+            controller.weeklyScores.length,
+            (i) => FlSpot(i.toDouble(), controller.weeklyScores[i]),
+          ),
           color: Colors.orange,
           barWidth: 3,
-        )
+        ),
       ],
     );
   }
 
-
-  BarChartData _barChartData() {
+  BarChartData _barChartData(ClientDashboardController controller) {
     return BarChartData(
       gridData: FlGridData(show: false),
       titlesData: FlTitlesData(show: false),
       borderData: FlBorderData(show: false),
       barGroups: List.generate(
-        8,
-            (i) => BarChartGroupData(
+        controller.caloriesData.length,
+        (i) => BarChartGroupData(
           x: i,
           barRods: [
             BarChartRodData(
-              toY: (i % 2 == 0 ? 8 : 4) + i.toDouble(),
+              toY: controller.caloriesData[i],
               color: Colors.white,
               width: 8,
               borderRadius: BorderRadius.circular(4),
-            )
+            ),
           ],
         ),
       ),

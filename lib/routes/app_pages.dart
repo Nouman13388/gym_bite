@@ -16,6 +16,17 @@ class AppPages {
 
   static final routes = [
     GetPage(name: Routes.SPLASH, page: () => const SplashView()),
+
+    GetPage(
+      name: Routes.REGISTER,
+      page: () => const RegisterView(),
+      binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
+    ),
     GetPage(
       name: Routes.MEAL_PLAN_DETAILS,
       page: () => const MealPlanDetailsView(),
@@ -28,9 +39,7 @@ class AppPages {
     GetPage(
       name: Routes.CLIENT_DASHBOARD,
       page: () => const ClientDashboardView(),
-      binding: BindingsBuilder(() {
-        Get.lazyPut<DashboardController>(() => DashboardController());
-      }),
+      binding: ClientDashboardBinding(),
     ),
     GetPage(
       name: Routes.TRAINER_DASHBOARD,
