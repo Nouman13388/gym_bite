@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/dashboard_controller.dart';
 
 class TrainerDashboardView extends GetView<DashboardController> {
@@ -92,7 +91,7 @@ class TrainerDashboardView extends GetView<DashboardController> {
                       SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           "Joe Morgan",
                           style: TextStyle(
@@ -127,7 +126,7 @@ class TrainerDashboardView extends GetView<DashboardController> {
                       SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             "Rachel Stone",
                             style: TextStyle(

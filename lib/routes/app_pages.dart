@@ -16,8 +16,6 @@ class AppPages {
 
   static final routes = [
     GetPage(name: Routes.SPLASH, page: () => const SplashView()),
-    GetPage(name: Routes.LOGIN, page: () => const LoginView()),
-    GetPage(name: Routes.REGISTER, page: () => const RegisterView()),
     GetPage(
       name: Routes.MEAL_PLAN_DETAILS,
       page: () => const MealPlanDetailsView(),
