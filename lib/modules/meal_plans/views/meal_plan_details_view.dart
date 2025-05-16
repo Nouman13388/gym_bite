@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/meal_plan_controller.dart';
 
-class MealPlanDetailsView extends StatelessWidget {
+class MealPlanDetailsView extends GetView<MealPlanController> {
   const MealPlanDetailsView({super.key});
 
   @override
@@ -26,21 +28,25 @@ class MealPlanDetailsView extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-
-            // Meal Plan Title & Details
-            Text(
-              'Meal Plan 1',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
+            SizedBox(height: 20), // Meal Plan Title & Details
+            Obx(
+              () => Text(
+                controller.selectedPlan.value?.title ?? 'Meal Plan',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(height: 8),
-            Text(
-              'Diet Type: High Protein, Non-Vegetarian\nGoal: Muscle Gain – 2500 kcal/day',
-              style: TextStyle(color: Colors.white70, fontSize: 16),
+            Obx(
+              () => Text(
+                'Diet Type: ${controller.selectedPlan.value?.dietType ?? "Standard"}\n'
+                'Goal: ${controller.selectedPlan.value?.goal ?? "Maintenance"} – '
+                '${controller.selectedPlan.value?.dailyCalories ?? 2000} kcal/day',
+                style: TextStyle(color: Colors.white70, fontSize: 16),
+              ),
             ),
             SizedBox(height: 24),
 
@@ -108,7 +114,8 @@ class MealPlanDetailsView extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // action here
+                    // Return to client dashboard
+                    Get.offNamed('/client_dashboard');
                   },
                   child: Text(
                     'Select',

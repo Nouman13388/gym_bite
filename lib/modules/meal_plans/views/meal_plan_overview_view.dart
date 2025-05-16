@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'meal_plan_details_view.dart';
+import 'package:get/get.dart';
+import '../controllers/meal_plan_controller.dart';
 
-class MealPlanOverviewView extends StatelessWidget {
+class MealPlanOverviewView extends GetView<MealPlanController> {
   const MealPlanOverviewView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -63,14 +64,33 @@ class MealPlanOverviewView extends StatelessWidget {
       subtitle: Text(
         'view details',
         style: TextStyle(color: Colors.white54, fontSize: 14),
-      ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MealPlanDetailsView(),
-          ),
+      ),      onTap: () {
+        // Create a sample meal plan and navigate
+        final mealPlan = MealPlanModel(
+          id: 1,
+          title: title,
+          dietType: 'High Protein, Non-Vegetarian',
+          goal: 'Muscle Gain',
+          dailyCalories: 2500,
+          meals: [
+            Meal(
+              name: 'Breakfast',
+              time: '08:00 AM',
+              description: '3 scrambled eggs, 2 slices whole grain toast, 1 avocado',
+            ),
+            Meal(
+              name: 'Lunch',
+              time: '01:00 PM',
+              description: 'Grilled chicken breast, brown rice, steamed vegetables',
+            ),
+            Meal(
+              name: 'Dinner',
+              time: '08:00 PM',
+              description: 'Grilled salmon, quinoa, sautéed spinach, sweet potato',
+            ),
+          ],
         );
+        controller.navigateToMealPlanDetails(mealPlan);
       },
     );
   }

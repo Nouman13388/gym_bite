@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'meal_plan_overview_view.dart';
+import 'package:get/get.dart';
+import '../controllers/meal_plan_controller.dart';
 
-class MealPlanSelectionView extends StatelessWidget {
+class MealPlanSelectionView extends GetView<MealPlanController> {
   const MealPlanSelectionView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -50,12 +51,7 @@ class MealPlanSelectionView extends StatelessWidget {
                     size: 40,
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MealPlanOverviewView(),
-                      ),
-                    );
+                    Get.find<MealPlanController>().navigateToMealPlanOverview();
                   },
                 ),
               ),
