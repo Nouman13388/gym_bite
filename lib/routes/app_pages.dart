@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import '../modules/auth/views/login_view.dart';
 import '../modules/auth/views/register_view.dart';
-import '../modules/dashboard/controllers/dashboard_controller.dart';
+import '../modules/dashboard/bindings/trainer_dashboard_binding.dart';
 import '../modules/dashboard/views/client_dashboard_view.dart';
 import '../modules/dashboard/views/trainer_dashboard_view.dart';
+import '../modules/meal_plans/bindings/meal_plan_binding.dart';
 import '../modules/meal_plans/views/meal_plan_details_view.dart';
 import '../modules/meal_plans/views/meal_plan_selection_view.dart';
 import '../modules/meal_plans/views/meal_plan_overview_view.dart';
@@ -13,10 +14,8 @@ part 'app_routes.dart';
 
 class AppPages {
   static const INITIAL = Routes.SPLASH;
-
   static final routes = [
     GetPage(name: Routes.SPLASH, page: () => const SplashView()),
-
     GetPage(
       name: Routes.REGISTER,
       page: () => const RegisterView(),
@@ -30,12 +29,18 @@ class AppPages {
     GetPage(
       name: Routes.MEAL_PLAN_DETAILS,
       page: () => const MealPlanDetailsView(),
+      binding: MealPlanBinding(),
     ),
     GetPage(
-      name: Routes.MEAL_PLAN_1,
+      name: Routes.MEAL_PLAN_SELECTION,
       page: () => const MealPlanSelectionView(),
+      binding: MealPlanBinding(),
     ),
-    GetPage(name: Routes.MEAL_PLAN_2, page: () => const MealPlanOverviewView()),
+    GetPage(
+      name: Routes.MEAL_PLAN_OVERVIEW,
+      page: () => const MealPlanOverviewView(),
+      binding: MealPlanBinding(),
+    ),
     GetPage(
       name: Routes.CLIENT_DASHBOARD,
       page: () => const ClientDashboardView(),
@@ -44,9 +49,7 @@ class AppPages {
     GetPage(
       name: Routes.TRAINER_DASHBOARD,
       page: () => const TrainerDashboardView(),
-      binding: BindingsBuilder(() {
-        Get.lazyPut<DashboardController>(() => DashboardController());
-      }),
+      binding: TrainerDashboardBinding(),
     ),
   ];
 }
