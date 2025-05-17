@@ -24,22 +24,25 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child:Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // TODO: Add your app logo here
-            const Icon(Icons.fitness_center, size: 100, color: Colors.blue),
+            Image.asset('assets/images/gymBite logo.png',),
             const SizedBox(height: 24),
-            const Text(
-              'GymBite',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            const SizedBox(height: 24),
+            const CircularProgressIndicator(
+              color: Colors.cyanAccent,
             ),
-            const SizedBox(height: 24),
-            const CircularProgressIndicator(),
           ],
         ),
+      ),
       ),
     );
   }
 }
+
+
