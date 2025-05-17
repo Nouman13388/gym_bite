@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import '../controllers/dashboard_controller.dart';
 import '../controllers/client_dashboard_controller.dart';
 
+
 class ClientDashboardBinding extends Bindings {
   @override
   void dependencies() {
@@ -14,9 +15,33 @@ class ClientDashboardBinding extends Bindings {
 class ClientDashboardView extends GetView<ClientDashboardController> {
   const ClientDashboardView({super.key});
 
+
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String formattedDate = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        elevation: 0,
+        title: Padding(
+        padding: EdgeInsets.only(top: 24.0),
+        child:
+        Image.asset(
+          'assets/images/gymBite logo.png',
+          height: 50, // adjust based on your image size
+        ),),
+        actions: [
+          SizedBox(height: 10,),
+          Padding(padding: EdgeInsets.only(top: 24.0),
+          child: CircleAvatar(
+            backgroundColor: Colors.white24,
+            child: Icon(Icons.person, color: Colors.white),
+          ),),
+          SizedBox(width: 25,),
+        ],
+      ),
       backgroundColor: Colors.black,
       body: SafeArea(
         child: ListView(
@@ -25,18 +50,14 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
             // Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  "Welcome User",
+                  "Today, $formattedDate",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
                   ),
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.white24,
-                  child: Icon(Icons.person, color: Colors.white),
                 ),
               ],
             ),
@@ -75,10 +96,26 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
                         ),
                       ],
                     ),
-                    const Text(
+                    Row(
+                    children: [
+                      const Text(
                       "Your Fitness Score",
                       style: TextStyle(color: Colors.white),
                     ),
+                      Spacer(),
+                      Container(
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.grey,  // Grey border color
+                            width: 1.0,          // Border width
+                          ),
+                        ),
+                        child:
+                        Text("View More", style: TextStyle(color: Colors.white)),
+                      )
+                    ],),
                     const SizedBox(height: 12),
                     SizedBox(
                       height: 100,
@@ -104,26 +141,42 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
             ),
 
             const SizedBox(height: 20),
-
             // Calories Chart Card
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Colors.pinkAccent, Colors.deepPurple],
+                  colors: [Colors.blueGrey, Colors.black],
                 ),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                children: [
                   const Text(
-                    "2300 Kcalories spend",
+                    "Your calories Trend",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
+                  Spacer(),
+                  Container(
+                    padding: const EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Colors.grey,  // Grey border color
+                        width: 1.0,          // Border width
+                      ),
+                    ),
+                    child:
+                    Text("View More", style: TextStyle(color: Colors.white)),
+                  )
+                ],  ),
                   const SizedBox(height: 12),
                   SizedBox(
                     height: 100,
@@ -135,40 +188,23 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
 
             const SizedBox(height: 20),
 
-            // Workout Plan Card
-            Container(
+            // Workout Plan & Meal Plan Card
+            Row(
+        children: [
+          Align(
+          alignment: Alignment.centerLeft,
+            child: Container(
+              width: 150,
               height: 140,
               decoration: BoxDecoration(
                 image: const DecorationImage(
-                  image: AssetImage('assets/images/muscle.png'),
+                  image: AssetImage('assets/images/workout_plans.jpeg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Stack(
                 children: [
-                  Positioned(
-                    top: 10,
-                    left: 10,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF21AEC7),
-                        border: Border.all(
-                          color: Colors.grey, // Grey border color
-                          width: 1.0, // Border width
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Text(
-                        "Upper Body",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
                   Positioned(
                     bottom: 12,
                     left: 12,
@@ -180,13 +216,41 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
                       ),
                     ),
                   ),
-                  const Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Icon(Icons.bookmark_border, color: Colors.white),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(width: 28,),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: 150,
+              height: 140,
+              decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/meal plan 4.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 12,
+                    left: 12,
+                    child: const Text(
+                      "Meal Plans\n⏱ 30 min",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
+            ),
+          ),
+          ],
             ),
           ],
         ),
@@ -254,4 +318,15 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
       ),
     );
   }
+}
+void main() {
+  // Manually inject the controller for testing
+  Get.put(ClientDashboardController());
+
+  runApp(
+    GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ClientDashboardView(), // Directly running the screen
+    ),
+  );
 }
