@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gym_bite/modules/dashboard/controllers/trainer_dashboard_controller.dart';
 import '../controllers/dashboard_controller.dart';
 
 class TrainerDashboardView extends GetView<DashboardController> {
@@ -7,7 +8,30 @@ class TrainerDashboardView extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String formattedDate = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        elevation: 0,
+        title: Padding(
+          padding: EdgeInsets.only(top: 24.0),
+          child:
+          Image.asset(
+            'assets/images/gymBite logo.png',
+            height: 50, // adjust based on your image size
+          ),),
+        actions: [
+          SizedBox(height: 10,),
+          Padding(padding: EdgeInsets.only(top: 24.0),
+            child: CircleAvatar(
+              backgroundColor: Colors.white24,
+              child: Icon(Icons.person, color: Colors.white),
+            ),),
+          SizedBox(width: 25,),
+        ],
+      ),
       backgroundColor: Colors.black,
       body: SafeArea(
         child: ListView(
@@ -16,14 +40,14 @@ class TrainerDashboardView extends GetView<DashboardController> {
             // Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children:[
                 Text(
-                  "Welcome Trainer",
-                  style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.white24,
-                  child: Icon(Icons.person, color: Colors.white),
+                  "Today, $formattedDate",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ],
             ),
@@ -226,5 +250,18 @@ class _ManageTile extends StatelessWidget {
     );
   }
 }
+
+void main() {
+  // Manually inject the controller for testing
+  Get.put(TrainerDashboardController());
+
+  runApp(
+    GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: TrainerDashboardView(), // Directly running the screen
+    ),
+  );
+}
+
 
 
