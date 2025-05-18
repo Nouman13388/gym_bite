@@ -18,6 +18,11 @@ abstract class Routes {
   static const MEAL_PLAN_DETAILS = '/meal_plan_details';
   static const MEAL_PLAN_SELECTION = '/meal_plan_selection';
   static const MEAL_PLAN_OVERVIEW = '/meal_plan_overview';
+  static const WORKOUT_PLAN_DETAILS = '/workout_plan_details';
+
+  // New meal plan routes
+  static const CLIENT_MEAL_PLANS = '/client_meal_plans';
+  static const TRAINER_MEAL_PLANS = '/trainer_meal_plans';
 
   // Trainer routes
   static const TRAINER_DASHBOARD = '/trainer_dashboard';

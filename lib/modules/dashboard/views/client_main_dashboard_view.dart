@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/main_dashboard_controller.dart';
-import '../../meal_plans/views/meal_plan_selection_view.dart';
+import '../controllers/client_dashboard_controller.dart';
+import 'client_dashboard_view.dart';
+import '../../meal_plans/views/client_meal_plan_view_embedded.dart';
+import '../../profile/views/client_profile_view.dart';
+import '../../profile/controllers/client_profile_controller.dart';
 
 class ClientMainDashboardView extends GetView<MainDashboardController> {
   const ClientMainDashboardView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,12 +85,7 @@ class ClientMainDashboardView extends GetView<MainDashboardController> {
           ),
         ],
       ),
-      body: Obx(
-        () => IndexedStack(
-          index: controller.selectedIndex.value,
-          children: controller.pages,
-        ),
-      ),
+      body: Obx(() => _buildBody()),
       bottomNavigationBar: Obx(
         () => NavigationBar(
           selectedIndex: controller.selectedIndex.value,
@@ -119,6 +117,134 @@ class ClientMainDashboardView extends GetView<MainDashboardController> {
               label: 'Profile',
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  // Method to build the appropriate body content based on the selected index
+  Widget _buildBody() {
+    switch (controller.selectedIndex.value) {
+      case 0: // Home
+        return _buildHomeContent();
+      case 1: // Meal Plans
+        return const ClientMealPlanViewEmbedded();
+      case 2: // Workout Plans
+        return _buildComingSoonContent('Workout Plans Feature');
+      case 3: // Progress
+        return _buildComingSoonContent('Progress Tracking Feature');
+      case 4: // Profile
+        return _buildProfileContent();
+      default:
+        return _buildHomeContent();
+    }
+  }
+
+  // Widget for the profile content
+  Widget _buildProfileContent() {
+    // Lazily load the profile controller if needed
+    if (!Get.isRegistered<ClientProfileController>()) {
+      Get.put(ClientProfileController());
+    }
+    // Return the client profile view
+    return const ClientProfileView();
+  }
+
+  // Widget for the home tab content
+  Widget _buildHomeContent() {
+    // Lazily load the ClientDashboardController if it's not already registered
+    if (!Get.isRegistered<ClientDashboardController>()) {
+      Get.put(ClientDashboardController());
+    }
+
+    // Show the ClientDashboardView as the home content
+    return const ClientDashboardView();
+  }
+
+  // Widget for "Coming Soon" placeholder content
+  Widget _buildComingSoonContent(String feature) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.construction, size: 80, color: Colors.cyanAccent),
+          const SizedBox(height: 24),
+          Text(
+            '$feature Coming Soon!',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'We\'re working hard to bring this feature to you.',
+            style: TextStyle(color: Colors.white70, fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Widget for dashboard cards
+  Widget _buildDashboardCard({
+    required String title,
+    required String description,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      color: Colors.white10,
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.cyanAccent.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, color: Colors.cyanAccent, size: 30),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      description,
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.cyanAccent,
+                size: 16,
+              ),
+            ],
+          ),
         ),
       ),
     );

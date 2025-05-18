@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import '../modules/auth/views/login_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/dashboard/bindings/client_dashboard_binding.dart'
@@ -10,9 +11,12 @@ import '../modules/dashboard/views/trainer_dashboard_view.dart';
 import '../modules/dashboard/views/client_main_dashboard_view.dart';
 import '../modules/dashboard/views/trainer_main_dashboard_view.dart';
 import '../modules/meal_plans/bindings/meal_plan_binding.dart';
+import '../modules/meal_plans/bindings/meal_plan_bindings.dart';
 import '../modules/meal_plans/views/meal_plan_details_view.dart';
 import '../modules/meal_plans/views/meal_plan_selection_view.dart';
 import '../modules/meal_plans/views/meal_plan_overview_view.dart';
+import '../modules/meal_plans/views/client_meal_plan_view.dart';
+import '../modules/meal_plans/views/trainer_meal_plan_view.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../services/auth_service.dart';
 
@@ -48,14 +52,24 @@ class AppPages {
       binding: MealPlanBinding(),
     ),
     GetPage(
+      name: Routes.CLIENT_MEAL_PLANS,
+      page: () => const ClientMealPlanView(),
+      binding: MealPlanBindings(),
+    ),
+    GetPage(
+      name: Routes.TRAINER_MEAL_PLANS,
+      page: () => const TrainerMealPlanView(),
+      binding: MealPlanBindings(),
+    ),
+    GetPage(
       name: Routes.CLIENT_DASHBOARD,
       page: () => const ClientDashboardView(),
       binding: bindings.ClientDashboardBinding(),
     ),
     GetPage(
       name: Routes.TRAINER_DASHBOARD,
-      page: () => const TrainerDashboardView(),
-      binding: TrainerDashboardBinding(),
+      page: () => const TrainerMainDashboardView(),
+      binding: MainDashboardBinding(),
     ),
     GetPage(
       name: Routes.MAIN_DASHBOARD,

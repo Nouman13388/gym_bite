@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../services/auth_service.dart';
-import '../../meal_plans/views/meal_plan_selection_view.dart';
-import '../../profile/views/client_profile_view.dart';
-import '../../profile/views/trainer_profile_view.dart';
-import '../views/client_dashboard_view.dart';
-import '../views/trainer_dashboard_view.dart';
+import '../../../routes/app_pages.dart';
+import '../../meal_plans/controllers/client_meal_plan_controller.dart';
+import '../../meal_plans/controllers/trainer_meal_plan_controller.dart';
 import '../../../models/user_model.dart';
 
 class MainDashboardController extends GetxController {
@@ -14,49 +12,55 @@ class MainDashboardController extends GetxController {
   final Rx<UserModel?> user = Rx<UserModel?>(null);
   final isTrainer = false.obs;
 
-  // Pages that will be displayed in the bottom navigation
-  late final List<Widget> pages;
-
   @override
   void onInit() {
     super.onInit();
     user.value = _authService.userModel;
     isTrainer.value = user.value?.isTrainer ?? false;
 
-    // Initialize pages based on user role
-    _initPages();
+    // Register the necessary controllers
+    _registerControllers();
   }
 
-  void _initPages() {
-    if (isTrainer.value) {
-      _initTrainerPages();
-    } else {
-      _initClientPages();
+  void _registerControllers() {
+    // Register client controllers if user is a client
+    if (!isTrainer.value) {
+      if (!Get.isRegistered<ClientMealPlanController>()) {
+        Get.put(ClientMealPlanController());
+      }
+    }
+    // Register trainer controllers if user is a trainer
+    else {
+      if (!Get.isRegistered<TrainerMealPlanController>()) {
+        Get.put(TrainerMealPlanController());
+      }
     }
   }
 
-  void _initClientPages() {
-    pages = [
-      const ClientDashboardView(),
-      const MealPlanSelectionView(), // Meal plans tab
-      Container(child: const Center(child: Text("Workout Plans"))),
-      Container(child: const Center(child: Text("Progress Tracking"))),
-      const ClientProfileView(), // Profile tab
-    ];
-  }
-
-  void _initTrainerPages() {
-    pages = [
-      const TrainerDashboardView(),
-      Container(child: const Center(child: Text("Clients List"))),
-      Container(child: const Center(child: Text("Training Sessions"))),
-      Container(child: const Center(child: Text("Custom Plans"))),
-      const TrainerProfileView(), // Profile tab
-    ];
-  }
-
   void changePage(int index) {
+    // If we're already on this index, no need to do anything
+    if (selectedIndex.value == index) return;
+
+    // Check if we're switching to profile tab to refresh user data
+    if (index == 4) {
+      // Refresh the user data to ensure we have the latest
+      _refreshUserData();
+    }
+
+    // Update the selected index
+    // The UI will react to this change through the Obx wrapper in the views
     selectedIndex.value = index;
+  }
+
+  // Method to refresh user data from auth service
+  Future<void> _refreshUserData() async {
+    try {
+      // Update from auth service
+      user.value = _authService.userModel;
+      print('Main Dashboard: User data refreshed for profile tab');
+    } catch (e) {
+      print('Error refreshing user data: $e');
+    }
   }
 
   Future<void> signOut() async {
@@ -76,13 +80,13 @@ class MainDashboardController extends GetxController {
 
       // Close loading dialog and navigate to login
       Get.back();
-      Get.offAllNamed('/login');
+      Get.offAllNamed(Routes.LOGIN);
     } catch (e) {
       // Close loading dialog if error occurs
       if (Get.isDialogOpen == true) Get.back();
       Get.snackbar(
         'Error',
-        'Failed to sign out: $e',
+        'Failed to sign out: ',
         snackPosition: SnackPosition.BOTTOM,
       );
     }
