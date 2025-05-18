@@ -1,6 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../../services/auth_service.dart';
 import '../../../routes/app_pages.dart';
+import '../../../utils/auth_error_handler.dart';
 
 class LoginController extends GetxController {
   final emailController = ''.obs;
@@ -15,16 +17,27 @@ class LoginController extends GetxController {
       );
       if (userCredential != null) {
         final user = authService.userModel;
+        debugPrint('User: ${user?.toJson()}');
+        debugPrint('AuthService userModel: ${authService.userModel?.toJson()}');
         if (user != null) {
+          debugPrint('User role: ${user.role}');
           if (user.isTrainer) {
+            debugPrint('Trainer Dashboard');
             Get.offAllNamed(Routes.TRAINER_DASHBOARD);
           } else {
+            debugPrint('Client Dashboard');
             Get.offAllNamed(Routes.CLIENT_DASHBOARD);
           }
         }
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM);
+      final errorMessage = AuthErrorHandler.getMessage(e);
+      Get.snackbar(
+        'Error',
+        errorMessage,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 4),
+      );
     }
   }
 }

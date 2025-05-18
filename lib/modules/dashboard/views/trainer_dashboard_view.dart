@@ -9,7 +9,8 @@ class TrainerDashboardView extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
-    String formattedDate = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    String formattedDate =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -17,19 +18,48 @@ class TrainerDashboardView extends GetView<DashboardController> {
         elevation: 0,
         title: Padding(
           padding: EdgeInsets.only(top: 24.0),
-          child:
-          Image.asset(
+          child: Image.asset(
             'assets/images/gymBite logo.png',
             height: 50, // adjust based on your image size
-          ),),
+          ),
+        ),
         actions: [
-          SizedBox(height: 10,),
-          Padding(padding: EdgeInsets.only(top: 24.0),
+          SizedBox(height: 10),
+          Padding(
+            padding: EdgeInsets.only(top: 24.0),
+            child: IconButton(
+              icon: Icon(Icons.logout, color: Colors.white),
+              onPressed: () {
+                // Show confirmation dialog
+                Get.dialog(
+                  AlertDialog(
+                    title: Text('Logout'),
+                    content: Text('Are you sure you want to logout?'),
+                    actions: [
+                      TextButton(
+                        child: Text('Cancel'),
+                        onPressed: () => Get.back(),
+                      ),
+                      TextButton(
+                        child: Text('Logout'),
+                        onPressed: () {
+                          controller.signOut();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 24.0),
             child: CircleAvatar(
               backgroundColor: Colors.white24,
               child: Icon(Icons.person, color: Colors.white),
-            ),),
-          SizedBox(width: 25,),
+            ),
+          ),
+          SizedBox(width: 25),
         ],
       ),
       backgroundColor: Colors.black,
@@ -40,7 +70,7 @@ class TrainerDashboardView extends GetView<DashboardController> {
             // Header
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:[
+              children: [
                 Text(
                   "Today, $formattedDate",
                   style: TextStyle(
@@ -61,8 +91,8 @@ class TrainerDashboardView extends GetView<DashboardController> {
                 color: Colors.grey[900],
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: Colors.grey,  // Grey border color
-                  width: 1.0,          // Border width
+                  color: Colors.grey, // Grey border color
+                  width: 1.0, // Border width
                 ),
               ),
               child: Column(
@@ -76,7 +106,14 @@ class TrainerDashboardView extends GetView<DashboardController> {
                         children: [
                           Row(
                             children: [
-                              Text("Your Client List", style: TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.bold)),
+                              Text(
+                                "Your Client List",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 6),
@@ -90,89 +127,95 @@ class TrainerDashboardView extends GetView<DashboardController> {
                       Container(
                         padding: const EdgeInsets.all(7),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: Colors.grey,  // Grey border color
-                            width: 1.0,          // Border width
+                            color: Colors.grey, // Grey border color
+                            width: 1.0, // Border width
                           ),
                         ),
-                        child:
-                      Text("View More", style: TextStyle(color: Colors.white)),
-                      )],
+                        child: Text(
+                          "View More",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
 
                   // Client 1
                   Container(
                     padding: const EdgeInsets.all(8),
-                  child: Column(
-                  children: [Row(
-                    children: const [
-                      CircleAvatar(
-                        radius: 27,
-                          child: Icon(Icons.person, color: Colors.white),
-                      ),
-                      SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
                       children: [
-                        Text(
-                          "Joe Morgan",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                        Row(
+                          children: const [
+                            CircleAvatar(
+                              radius: 27,
+                              child: Icon(Icons.person, color: Colors.white),
+                            ),
+                            SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Joe Morgan",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                SizedBox(height: 3),
+                                Text(
+                                  "Fitness Score: 77",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 3),
-                        Text(
-                          "Fitness Score: 77",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                          ),
+
+                        const SizedBox(height: 18),
+
+                        // Client 2
+                        Row(
+                          children: const [
+                            CircleAvatar(
+                              radius: 27,
+                              child: Icon(Icons.person, color: Colors.white),
+                            ),
+                            SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Rachel Stone",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                SizedBox(height: 3),
+                                Text(
+                                  "Fitness Score: 84",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    ],
                   ),
-
-                  const SizedBox(height: 18),
-
-                  // Client 2
-                  Row(
-                    children: const [
-                      CircleAvatar(
-                        radius: 27,
-                          child: Icon(Icons.person, color: Colors.white),
-                      ),
-                      SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Rachel Stone",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            ),
-                          ),
-                          SizedBox(height: 3),
-                          Text(
-                            "Fitness Score: 84",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),],
-            ),)
                 ],
               ),
             ),
@@ -180,7 +223,14 @@ class TrainerDashboardView extends GetView<DashboardController> {
             const SizedBox(height: 34),
 
             // Manage Clients Section
-            const Text("Manage Clients", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w400)),
+            const Text(
+              "Manage Clients",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
             const SizedBox(height: 20),
 
             Row(
@@ -243,7 +293,12 @@ class _ManageTile extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, height: 1.2),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              height: 1.2,
+            ),
           ),
         ],
       ),
@@ -262,6 +317,3 @@ void main() {
     ),
   );
 }
-
-
-

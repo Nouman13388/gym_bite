@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import '../controllers/trainer_dashboard_controller.dart';
+import '../controllers/client_dashboard_controller.dart';
 import '../controllers/dashboard_controller.dart';
 
-class TrainerDashboardBinding extends Bindings {
+class ClientDashboardBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<TrainerDashboardController>(() => TrainerDashboardController());
+    Get.lazyPut<ClientDashboardController>(() => ClientDashboardController());
     // Ensure DashboardController is available
     if (!Get.isRegistered<DashboardController>()) {
       Get.lazyPut<DashboardController>(() => DashboardController());

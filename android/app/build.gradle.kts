@@ -8,10 +8,9 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-android {
-    namespace = "com.nomdevs.gym_bite"
+android {    namespace = "com.nomdevs.gym_bite"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "29.0.13113456" // Updated to use the installed NDK version
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../modules/auth/views/login_view.dart';
 import '../modules/auth/views/register_view.dart';
+import '../modules/dashboard/bindings/client_dashboard_binding.dart' as bindings;
 import '../modules/dashboard/bindings/trainer_dashboard_binding.dart';
 import '../modules/dashboard/views/client_dashboard_view.dart';
 import '../modules/dashboard/views/trainer_dashboard_view.dart';
@@ -44,7 +45,7 @@ class AppPages {
     GetPage(
       name: Routes.CLIENT_DASHBOARD,
       page: () => const ClientDashboardView(),
-      binding: ClientDashboardBinding(),
+      binding: bindings.ClientDashboardBinding(),
     ),
     GetPage(
       name: Routes.TRAINER_DASHBOARD,

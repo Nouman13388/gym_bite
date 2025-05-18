@@ -30,15 +30,31 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    final String roleStr = json['role']?.toString().toUpperCase() ?? '';
+    print('Raw role from API: $roleStr');
+
+    // Mapping from API role strings to enum values for more robust parsing
+    final roleMapping = {
+      'CLIENT': UserRole.client,
+      'TRAINER': UserRole.trainer,
+      'ADMIN': UserRole.admin,
+    };
+
+    // Try direct mapping first, then fallback to enum comparison
+    final parsedRole =
+        roleMapping[roleStr] ??
+        UserRole.values.firstWhere(
+          (e) => e.toString().split('.').last.toUpperCase() == roleStr,
+          orElse: () => UserRole.client,
+        );
+
+    print('Parsed UserRole: $parsedRole');
     return UserModel(
       id: json['id'],
       name: json['name'],
       email: json['email'],
       password: json['password'],
-      role: UserRole.values.firstWhere(
-        (e) => e.toString() == 'UserRole.${json['role']}',
-        orElse: () => UserRole.client,
-      ),
+      role: parsedRole,
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       trainers:

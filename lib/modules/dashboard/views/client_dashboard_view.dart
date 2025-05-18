@@ -4,42 +4,74 @@ import 'package:fl_chart/fl_chart.dart';
 import '../controllers/dashboard_controller.dart';
 import '../controllers/client_dashboard_controller.dart';
 
-
 class ClientDashboardBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ClientDashboardController>(() => ClientDashboardController());
+    // Ensure DashboardController is available
+    if (!Get.isRegistered<DashboardController>()) {
+      Get.lazyPut<DashboardController>(() => DashboardController());
+    }
   }
 }
 
 class ClientDashboardView extends GetView<ClientDashboardController> {
   const ClientDashboardView({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
-    String formattedDate = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+    String formattedDate =
+        "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
         elevation: 0,
         title: Padding(
-        padding: EdgeInsets.only(top: 24.0),
-        child:
-        Image.asset(
-          'assets/images/gymBite logo.png',
-          height: 50, // adjust based on your image size
-        ),),
+          padding: EdgeInsets.only(top: 24.0),
+          child: Image.asset(
+            'assets/images/gymBite logo.png',
+            height: 50, // adjust based on your image size
+          ),
+        ),
         actions: [
-          SizedBox(height: 10,),
-          Padding(padding: EdgeInsets.only(top: 24.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.white24,
-            child: Icon(Icons.person, color: Colors.white),
-          ),),
-          SizedBox(width: 25,),
+          SizedBox(height: 10),
+          Padding(
+            padding: EdgeInsets.only(top: 24.0),
+            child: IconButton(
+              icon: Icon(Icons.logout, color: Colors.white),
+              onPressed: () {
+                // Show confirmation dialog
+                Get.dialog(
+                  AlertDialog(
+                    title: Text('Logout'),
+                    content: Text('Are you sure you want to logout?'),
+                    actions: [
+                      TextButton(
+                        child: Text('Cancel'),
+                        onPressed: () => Get.back(),
+                      ),
+                      TextButton(
+                        child: Text('Logout'),
+                        onPressed: () {
+                          Get.find<DashboardController>().signOut();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 24.0),
+            child: CircleAvatar(
+              backgroundColor: Colors.white24,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+          ),
+          SizedBox(width: 25),
         ],
       ),
       backgroundColor: Colors.black,
@@ -97,25 +129,28 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
                       ],
                     ),
                     Row(
-                    children: [
-                      const Text(
-                      "Your Fitness Score",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                      Spacer(),
-                      Container(
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.grey,  // Grey border color
-                            width: 1.0,          // Border width
+                      children: [
+                        const Text(
+                          "Your Fitness Score",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Spacer(),
+                        Container(
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.grey, // Grey border color
+                              width: 1.0, // Border width
+                            ),
+                          ),
+                          child: Text(
+                            "View More",
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        child:
-                        Text("View More", style: TextStyle(color: Colors.white)),
-                      )
-                    ],),
+                      ],
+                    ),
                     const SizedBox(height: 12),
                     SizedBox(
                       height: 100,
@@ -154,29 +189,32 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                children: [
-                  const Text(
-                    "Your calories Trend",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Spacer(),
-                  Container(
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.grey,  // Grey border color
-                        width: 1.0,          // Border width
+                    children: [
+                      const Text(
+                        "Your calories Trend",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    child:
-                    Text("View More", style: TextStyle(color: Colors.white)),
-                  )
-                ],  ),
+                      Spacer(),
+                      Container(
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.grey, // Grey border color
+                            width: 1.0, // Border width
+                          ),
+                        ),
+                        child: Text(
+                          "View More",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 12),
                   SizedBox(
                     height: 100,
@@ -190,67 +228,67 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
 
             // Workout Plan & Meal Plan Card
             Row(
-        children: [
-          Align(
-          alignment: Alignment.centerLeft,
-            child: Container(
-              width: 150,
-              height: 140,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/workout_plans.jpeg'),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: 12,
-                    left: 12,
-                    child: const Text(
-                      "Workout Plans\n⏱ 50 min",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 150,
+                    height: 140,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/workout_plans.jpeg'),
+                        fit: BoxFit.cover,
                       ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          bottom: 12,
+                          left: 12,
+                          child: const Text(
+                            "Workout Plans\n⏱ 50 min",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(width: 28,),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              width: 150,
-              height: 140,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/meal plan 4.jpg'),
-                  fit: BoxFit.cover,
                 ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: 12,
-                    left: 12,
-                    child: const Text(
-                      "Meal Plans\n⏱ 30 min",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                SizedBox(width: 28),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 150,
+                    height: 140,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/meal plan 4.jpg'),
+                        fit: BoxFit.cover,
                       ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          bottom: 12,
+                          left: 12,
+                          child: const Text(
+                            "Meal Plans\n⏱ 30 min",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          ],
+                ),
+              ],
             ),
           ],
         ),
@@ -319,6 +357,7 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
     );
   }
 }
+
 void main() {
   // Manually inject the controller for testing
   Get.put(ClientDashboardController());
