@@ -13,7 +13,7 @@ class MealPlanSelectionView extends GetView<MealPlanController> {
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 60),
+            SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.all(20),
               child: Text(
