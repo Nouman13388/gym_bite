@@ -112,6 +112,11 @@ class TrainerMainDashboardView extends GetView<MainDashboardController> {
               selectedIcon: Icon(Icons.library_books),
               label: 'Plans',
             ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Profile',
+            ),
           ],
         ),
       ),

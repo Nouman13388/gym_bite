@@ -7,10 +7,14 @@ import '../../../utils/auth_error_handler.dart';
 class LoginController extends GetxController {
   final emailController = ''.obs;
   final passwordController = ''.obs;
+  final isLoading = false.obs;
   final AuthService authService = Get.find<AuthService>();
 
   Future<void> login() async {
+    if (isLoading.value) return; // Prevent multiple clicks
+
     try {
+      isLoading.value = true;
       final userCredential = await authService.signInWithEmailAndPassword(
         emailController.value,
         passwordController.value,
@@ -33,6 +37,8 @@ class LoginController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 4),
       );
+    } finally {
+      isLoading.value = false; // Reset loading state
     }
   }
 }

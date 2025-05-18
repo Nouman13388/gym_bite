@@ -24,14 +24,15 @@ class LoginView extends GetView<LoginController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset('assets/images/gymBite logo.png',
-            height: 80,),
+            Image.asset('assets/images/gymBite logo.png', height: 80),
             const SizedBox(height: 32),
             TextField(
               onChanged: (val) => controller.emailController.value = val,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.white), // Label when not focused
+                labelStyle: TextStyle(
+                  color: Colors.white,
+                ), // Label when not focused
                 floatingLabelStyle: TextStyle(color: Colors.cyanAccent),
                 prefixIcon: Icon(Icons.email),
                 border: OutlineInputBorder(
@@ -67,8 +68,12 @@ class LoginView extends GetView<LoginController> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
-                labelStyle: TextStyle(color: Colors.white), // Label when not focused
-                floatingLabelStyle: TextStyle(color: Colors.cyanAccent), // Label when focused
+                labelStyle: TextStyle(
+                  color: Colors.white,
+                ), // Label when not focused
+                floatingLabelStyle: TextStyle(
+                  color: Colors.cyanAccent,
+                ), // Label when focused
                 prefixIcon: Icon(Icons.lock),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -97,23 +102,39 @@ class LoginView extends GetView<LoginController> {
               ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: controller.login,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyanAccent, // Button background color
-                foregroundColor: Colors.white, // Text/icon color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Rounded corners
+            Obx(
+              () => ElevatedButton(
+                onPressed: controller.isLoading.value ? null : controller.login,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.cyanAccent, // Button background color
+                  foregroundColor: Colors.white, // Text/icon color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Rounded corners
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ), // Optional padding
+                  disabledBackgroundColor:
+                      Colors.grey, // Color when button is disabled
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Optional padding
+                child:
+                    controller.isLoading.value
+                        ? SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.0,
+                          ),
+                        )
+                        : const Text('Login'),
               ),
-              child: const Text('Login'),
             ),
             const SizedBox(height: 16),
             TextButton(
               onPressed: () => Get.toNamed('/register'),
-              style: TextButton.styleFrom(
-                  foregroundColor: Colors.cyanAccent),
+              style: TextButton.styleFrom(foregroundColor: Colors.cyanAccent),
               child: const Text('Don\'t have an account? Register'),
             ),
           ],

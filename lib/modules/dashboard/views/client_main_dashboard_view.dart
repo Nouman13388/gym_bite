@@ -113,6 +113,11 @@ class ClientMainDashboardView extends GetView<MainDashboardController> {
               selectedIcon: Icon(Icons.analytics),
               label: 'Progress',
             ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Profile',
+            ),
           ],
         ),
       ),

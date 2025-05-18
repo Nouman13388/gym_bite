@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../services/auth_service.dart';
 import '../../meal_plans/views/meal_plan_selection_view.dart';
+import '../../profile/views/client_profile_view.dart';
+import '../../profile/views/trainer_profile_view.dart';
 import '../views/client_dashboard_view.dart';
 import '../views/trainer_dashboard_view.dart';
 import '../../../models/user_model.dart';
@@ -39,6 +41,7 @@ class MainDashboardController extends GetxController {
       const MealPlanSelectionView(), // Meal plans tab
       Container(child: const Center(child: Text("Workout Plans"))),
       Container(child: const Center(child: Text("Progress Tracking"))),
+      const ClientProfileView(), // Profile tab
     ];
   }
 
@@ -48,6 +51,7 @@ class MainDashboardController extends GetxController {
       Container(child: const Center(child: Text("Clients List"))),
       Container(child: const Center(child: Text("Training Sessions"))),
       Container(child: const Center(child: Text("Custom Plans"))),
+      const TrainerProfileView(), // Profile tab
     ];
   }
 
