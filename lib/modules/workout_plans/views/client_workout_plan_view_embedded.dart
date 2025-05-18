@@ -235,7 +235,7 @@ class WorkoutPlanCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
-              image: AssetImage(plan.imageUrl),
+              image: AssetImage('assets/images/workout_plans.jpeg'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.4),
@@ -474,7 +474,7 @@ class WorkoutPlanDetailsSheet extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(plan.imageUrl),
+                image: AssetImage('assets/images/workout_plans.jpeg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.4),
