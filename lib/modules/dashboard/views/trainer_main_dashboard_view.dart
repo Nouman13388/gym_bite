@@ -17,6 +17,7 @@ class TrainerMainDashboardView extends GetView<MainDashboardController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        surfaceTintColor: Colors.transparent,
         centerTitle: true,
         elevation: 0,
         title: Padding(
