@@ -9,7 +9,8 @@ class MealPlanSelectionView extends GetView<MealPlanController> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Column(
+        child: SingleChildScrollView(
+        child:Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 60),
@@ -57,6 +58,7 @@ class MealPlanSelectionView extends GetView<MealPlanController> {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

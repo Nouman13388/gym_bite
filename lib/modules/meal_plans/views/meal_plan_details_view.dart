@@ -115,7 +115,7 @@ class MealPlanDetailsView extends GetView<MealPlanController> {
                   ),
                   onPressed: () {
                     // Return to client dashboard
-                    Get.offNamed('/client_dashboard');
+                    Get.offNamed('/main_dashboard');
                   },
                   child: Text(
                     'Select',
