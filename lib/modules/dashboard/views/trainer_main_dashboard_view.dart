@@ -54,7 +54,7 @@ class TrainerMainDashboardView extends GetView<MainDashboardController> {
                   final user = controller.user.value;
                   if (user != null) {
                     Get.snackbar(
-                      'Client Account',
+                      'Trainer Account',
                       'Name: ${user.name}\nEmail: ${user.email}',
                       snackPosition: SnackPosition.BOTTOM,
                       duration: const Duration(seconds: 3),
