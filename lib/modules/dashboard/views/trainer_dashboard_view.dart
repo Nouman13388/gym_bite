@@ -174,7 +174,7 @@ class TrainerDashboardView extends GetView<DashboardController> {
 
             // Manage Clients Section
             const Text(
-              "Manage Clients",
+              "",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22,
@@ -183,22 +183,6 @@ class TrainerDashboardView extends GetView<DashboardController> {
             ),
             const SizedBox(height: 20),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _ManageTile(
-                  color: Color.fromRGBO(206, 116, 36, 1.0),
-                  imageAsset: 'assets/images/workout.png',
-                  label: "Create Workout Plans",
-                ),
-                const SizedBox(width: 24),
-                _ManageTile(
-                  color: Color.fromRGBO(125, 86, 233, 1.0),
-                  imageAsset: 'assets/images/Meals.png',
-                  label: "Create meal Plans",
-                ),
-              ],
-            ),
           ],
         ),
       ),
