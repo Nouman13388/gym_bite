@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:gym_bite/core/constants/app_constants.dart';
 import 'package:http/http.dart' as http;
 import '../models/meal_plan_model.dart';
 
 class MealPlanService {
-  final String apiUrl = 'http://13.61.146.2:3000/api';
+  final String apiUrl = AppConstants.baseUrl;
 
   // Get all meal plans
   Future<List<MealPlanModel>> getAllMealPlans() async {

@@ -1,15 +1,21 @@
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import '../../../models/meal_plan_model.dart';
 import '../../../services/meal_plan_service.dart';
+import '../../../services/auth_service.dart';
 
 class ClientMealPlanController extends GetxController {
   final MealPlanService _mealPlanService = MealPlanService();
+  final AuthService _authService = Get.find<AuthService>();
 
   // Observable properties
   final mealPlans = <MealPlanModel>[].obs;
   final selectedPlan = Rx<MealPlanModel?>(null);
   final isLoading = false.obs;
+  final isRefreshing = false.obs;
   final selectedCategory = 'All'.obs;
+  final errorMessage = ''.obs;
+  final hasError = false.obs;
 
   final categories =
       [
@@ -31,21 +37,89 @@ class ClientMealPlanController extends GetxController {
   Future<void> fetchMealPlans() async {
     try {
       isLoading.value = true;
+      hasError.value = false;
+      errorMessage.value = '';
 
-      // In a real app, you would fetch plans assigned to the current client
-      // For now, we'll fetch all meal plans
-      final plans = await _mealPlanService.getAllMealPlans();
-      mealPlans.value = plans;
+      // Check if user is logged in and has an ID
+      final user = _authService.userModel;
+      if (user != null && user.id > 0) {
+        try {
+          // Fetch meal plans assigned to this client
+          final plans = await _mealPlanService.getClientMealPlans(user.id);
+          mealPlans.value = plans;
 
-      // If no plans are returned from API, use sample data for testing
-      if (mealPlans.isEmpty) {
-        _loadSampleData();
+          // If no plans are returned from API, use sample data for testing
+          if (mealPlans.isEmpty) {
+            _loadSampleData();
+          }
+        } catch (e) {
+          print('Error fetching client meal plans: $e');
+          // Fallback to all meal plans if client-specific endpoint fails
+          final plans = await _mealPlanService.getAllMealPlans();
+          mealPlans.value = plans;
+
+          if (mealPlans.isEmpty) {
+            _loadSampleData();
+          }
+        }
+      } else {
+        // No user ID available, fallback to getting all meal plans
+        final plans = await _mealPlanService.getAllMealPlans();
+        mealPlans.value = plans;
+
+        if (mealPlans.isEmpty) {
+          _loadSampleData();
+        }
       }
 
       isLoading.value = false;
     } catch (e) {
       isLoading.value = false;
+      hasError.value = true;
+      errorMessage.value = 'Failed to load meal plans: ${e.toString()}';
       Get.snackbar('Error', 'Failed to load meal plans: ${e.toString()}');
+    }
+  }
+
+  Future<void> refreshMealPlans() async {
+    isRefreshing.value = true;
+    try {
+      await fetchMealPlans();
+      Get.snackbar(
+        'Success',
+        'Meal plans refreshed',
+        backgroundColor: Colors.green.withOpacity(0.7),
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to refresh meal plans',
+        backgroundColor: Colors.red.withOpacity(0.7),
+        colorText: Colors.white,
+      );
+    } finally {
+      isRefreshing.value = false;
+    }
+  }
+
+  MealPlanModel? getMealPlanById(int id) {
+    try {
+      // Try to find the meal plan in the current list
+      for (var plan in mealPlans) {
+        if (plan.id == id) {
+          return plan;
+        }
+      }
+      return null;
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to get meal plan details',
+        backgroundColor: Colors.red.withOpacity(0.7),
+        colorText: Colors.white,
+      );
+      return null;
     }
   }
 
