@@ -6,6 +6,7 @@ import '../models/user_model.dart';
 class UserService {
   Future<UserModel?> getUserByFirebaseUid(String firebaseUid) async {
     try {
+      print('UserService - Fetching user by Firebase UID: $firebaseUid');
       final response = await http.get(
         Uri.parse('${AppConstants.userEndpoint}?firebaseUid=$firebaseUid'),
         headers: {'Content-Type': 'application/json'},
@@ -13,8 +14,20 @@ class UserService {
 
       if (response.statusCode == 200) {
         final List<dynamic> users = jsonDecode(response.body);
-        if (users.isNotEmpty) {
-          return UserModel.fromJson(users.first);
+        if (users.isEmpty) {
+          print('UserService - No users returned from API');
+          return null;
+        }
+
+        // Find the user with matching Firebase UID
+        final userData = users.firstWhere(
+          (user) => user['firebaseUid'] == firebaseUid,
+          orElse: () => null,
+        );
+
+        if (userData != null) {
+          print('UserService - Found user data: $userData');
+          return UserModel.fromJson(userData);
         }
       }
       return null;

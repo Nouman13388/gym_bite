@@ -20,7 +20,7 @@ Fitness progress tracking and data visualization
 
 Admin control for trainer approval, reports, and analytics
 
-Integration with Firebase, MySQL, and external APIs (e.g., Fitbit, Stripe)
+Integration with Firebase, MySQL, and external APIs
 
 Technical Implementation:
 GymBite is developed using Flutter for the frontend and a Node.js + Firebase-powered backend with SQL for data management. The system follows Agile methodology with modular design and adheres to best practices for scalability, security, and performance.

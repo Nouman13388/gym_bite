@@ -6,9 +6,9 @@ enum UserRole {
   String get displayName {
     switch (this) {
       case UserRole.client:
-        return 'Client';
+        return 'CLIENT';
       case UserRole.trainer:
-        return 'Trainer';
+        return 'TRAINER';
       case UserRole.admin:
         return 'Admin';
     }
