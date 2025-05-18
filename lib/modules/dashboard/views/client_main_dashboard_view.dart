@@ -4,8 +4,10 @@ import '../controllers/main_dashboard_controller.dart';
 import '../controllers/client_dashboard_controller.dart';
 import 'client_dashboard_view.dart';
 import '../../meal_plans/views/client_meal_plan_view_embedded.dart';
+import '../../workout_plans/views/client_workout_plan_view_embedded.dart';
 import '../../profile/views/client_profile_view.dart';
 import '../../profile/controllers/client_profile_controller.dart';
+import '../../workout_plans/controllers/client_workout_plan_controller.dart';
 
 class ClientMainDashboardView extends GetView<MainDashboardController> {
   const ClientMainDashboardView({super.key});
@@ -130,7 +132,7 @@ class ClientMainDashboardView extends GetView<MainDashboardController> {
       case 1: // Meal Plans
         return const ClientMealPlanViewEmbedded();
       case 2: // Workout Plans
-        return _buildComingSoonContent('Workout Plans Feature');
+        return _buildWorkoutContent();
       case 3: // Progress
         return _buildComingSoonContent('Progress Tracking Feature');
       case 4: // Profile
@@ -148,6 +150,16 @@ class ClientMainDashboardView extends GetView<MainDashboardController> {
     }
     // Return the client profile view
     return const ClientProfileView();
+  }
+
+  // Widget for the workout plans content
+  Widget _buildWorkoutContent() {
+    // Lazily load the workout controller if needed
+    if (!Get.isRegistered<ClientWorkoutPlanController>()) {
+      Get.put(ClientWorkoutPlanController());
+    }
+    // Return the client workout plan view
+    return const ClientWorkoutPlanViewEmbedded();
   }
 
   // Widget for the home tab content

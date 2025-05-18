@@ -17,6 +17,9 @@ import '../modules/meal_plans/views/meal_plan_selection_view.dart';
 import '../modules/meal_plans/views/meal_plan_overview_view.dart';
 import '../modules/meal_plans/views/client_meal_plan_view.dart';
 import '../modules/meal_plans/views/trainer_meal_plan_view.dart';
+import '../modules/workout_plans/bindings/workout_plan_binding.dart';
+import '../modules/workout_plans/bindings/workout_plan_bindings.dart';
+import '../modules/workout_plans/views/workout_plan_details_view.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../services/auth_service.dart';
 
@@ -60,6 +63,11 @@ class AppPages {
       name: Routes.TRAINER_MEAL_PLANS,
       page: () => const TrainerMealPlanView(),
       binding: MealPlanBindings(),
+    ),
+    GetPage(
+      name: Routes.WORKOUT_PLAN_DETAILS,
+      page: () => const WorkoutPlanDetailsView(),
+      binding: WorkoutPlanBinding(),
     ),
     GetPage(
       name: Routes.CLIENT_DASHBOARD,

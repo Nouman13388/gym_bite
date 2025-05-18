@@ -4,8 +4,10 @@ import '../controllers/main_dashboard_controller.dart';
 import '../controllers/trainer_dashboard_controller.dart';
 import 'trainer_dashboard_view.dart';
 import '../../meal_plans/views/trainer_meal_plan_view_embedded.dart';
+import '../../workout_plans/views/trainer_workout_plan_view_embedded.dart';
 import '../../profile/views/trainer_profile_view.dart';
 import '../../profile/controllers/trainer_profile_controller.dart';
+import '../../workout_plans/controllers/trainer_workout_plan_controller.dart';
 
 class TrainerMainDashboardView extends GetView<MainDashboardController> {
   const TrainerMainDashboardView({super.key});
@@ -108,9 +110,9 @@ class TrainerMainDashboardView extends GetView<MainDashboardController> {
               label: 'Meal Plans',
             ),
             NavigationDestination(
-              icon: Icon(Icons.library_books_outlined),
-              selectedIcon: Icon(Icons.library_books),
-              label: 'Plans',
+              icon: Icon(Icons.fitness_center_outlined),
+              selectedIcon: Icon(Icons.fitness_center),
+              label: 'Workouts',
             ),
             NavigationDestination(
               icon: Icon(Icons.person_outline),
@@ -131,8 +133,8 @@ class TrainerMainDashboardView extends GetView<MainDashboardController> {
         return _buildComingSoonContent('Client Management Feature');
       case 2: // Meal Plans
         return const TrainerMealPlanViewEmbedded();
-      case 3: // Plans (General)
-        return _buildComingSoonContent('Workout Plans Feature');
+      case 3: // Workout Plans
+        return _buildWorkoutContent();
       case 4: // Profile
         // Import the TrainerProfileView and show it
         return _buildProfileContent();
@@ -149,6 +151,16 @@ class TrainerMainDashboardView extends GetView<MainDashboardController> {
     }
     // Return the trainer profile view
     return const TrainerProfileView();
+  }
+
+  // Widget for the workout plans content
+  Widget _buildWorkoutContent() {
+    // Lazily load the workout controller if needed
+    if (!Get.isRegistered<TrainerWorkoutPlanController>()) {
+      Get.put(TrainerWorkoutPlanController());
+    }
+    // Return the trainer workout plan view
+    return const TrainerWorkoutPlanViewEmbedded();
   }
 
   // Widget for the home tab content

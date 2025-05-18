@@ -24,8 +24,9 @@ class WorkoutPlanModel {
     this.createdAt,
     this.updatedAt,
   });
-
   factory WorkoutPlanModel.fromJson(Map<String, dynamic> json) {
+    print('DEBUG: Creating WorkoutPlanModel from JSON: $json');
+
     // Parse exercises from the exercises field if it exists as a list
     List<Exercise> parsedExercises = [];
     if (json['exercises'] != null && json['exercises'] is List) {
@@ -34,20 +35,45 @@ class WorkoutPlanModel {
     } else if (json['exercises'] != null && json['exercises'] is String) {
       // For backward compatibility with the old API
       final exercisesStr = json['exercises'] as String;
-      final sets = json['sets'] as int? ?? 3;
-      final reps = json['reps'] as int? ?? 10;
+      print('DEBUG: Parsing exercises from string: $exercisesStr');
+      final sets =
+          json['sets'] is int
+              ? json['sets']
+              : int.tryParse('${json['sets']}') ?? 3;
+      final reps =
+          json['reps'] is int
+              ? json['reps']
+              : int.tryParse('${json['reps']}') ?? 10;
       parsedExercises = parseExercises(exercisesStr, sets, reps);
     }
 
     return WorkoutPlanModel(
-      id: json['id'] ?? 0,
-      userId: json['userId'] ?? 0,
+      id:
+          json['id'] != null
+              ? (json['id'] is int
+                      ? json['id']
+                      : int.tryParse('${json['id']}')) ??
+                  0
+              : 0,
+      userId:
+          json['userId'] != null
+              ? (json['userId'] is int
+                      ? json['userId']
+                      : int.tryParse('${json['userId']}')) ??
+                  0
+              : 0,
       title: json['title'] ?? json['name'] ?? 'Unnamed Workout',
       description: json['description'] ?? 'No description available',
       category:
           json['category'] ??
           determineCategory(json['exercises']?.toString() ?? ''),
-      duration: json['duration'] ?? 30,
+      duration:
+          json['duration'] != null
+              ? (json['duration'] is int
+                      ? json['duration']
+                      : int.tryParse('${json['duration']}')) ??
+                  30
+              : 30,
       difficulty: json['difficulty'] ?? 'Intermediate',
       imageUrl: json['imageUrl'] ?? 'assets/images/workout.png',
       exercises: parsedExercises,
@@ -95,6 +121,28 @@ class WorkoutPlanModel {
           ),
         )
         .toList();
+  }
+
+  // Convert to JSON for API requests
+  Map<String, dynamic> toJson() {
+    print('DEBUG: Converting workout plan to JSON');
+
+    // Format exercises according to API format
+    String exercisesStr = exercises.map((e) => e.name).join(', ');
+    int setsValue = exercises.isNotEmpty ? exercises.first.sets : 3;
+    int repsValue = exercises.isNotEmpty ? exercises.first.reps : 10;
+
+    // Create API-compatible JSON format
+    final json = {
+      'userId': userId,
+      'name': title,
+      'exercises': exercisesStr,
+      'sets': setsValue,
+      'reps': repsValue,
+    };
+
+    print('DEBUG: Final JSON for API: $json');
+    return json;
   }
 }
 
