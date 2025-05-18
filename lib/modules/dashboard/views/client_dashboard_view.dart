@@ -27,7 +27,7 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(28),
           children: [
             // Header
             Row(
@@ -47,7 +47,7 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
 
             // Fitness Score Card
             Obx(
-              () => Container(
+                  () => Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(169, 169, 169, 0.2),
@@ -173,73 +173,7 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
-
-            // Workout Plan & Meal Plan Card
-            Row(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: 150,
-                    height: 140,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/workout_plans.jpeg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          bottom: 12,
-                          left: 12,
-                          child: const Text(
-                            "Workout Plans\n⏱ 50 min",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 28),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: 150,
-                    height: 140,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/meal plan 4.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          bottom: 12,
-                          left: 12,
-                          child: const Text(
-                            "Meal Plans\n⏱ 30 min",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -276,7 +210,7 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
           isCurved: true,
           spots: List.generate(
             controller.weeklyScores.length,
-            (i) => FlSpot(i.toDouble(), controller.weeklyScores[i]),
+                (i) => FlSpot(i.toDouble(), controller.weeklyScores[i]),
           ),
           color: Colors.orange,
           barWidth: 3,
@@ -292,7 +226,7 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
       borderData: FlBorderData(show: false),
       barGroups: List.generate(
         controller.caloriesData.length,
-        (i) => BarChartGroupData(
+            (i) => BarChartGroupData(
           x: i,
           barRods: [
             BarChartRodData(
