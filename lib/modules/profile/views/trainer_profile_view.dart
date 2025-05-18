@@ -130,7 +130,7 @@ class TrainerProfileView extends GetView<TrainerProfileController> {
                     .map(
                       (skill) => Chip(
                         label: Text(skill),
-                        backgroundColor: Colors.grey[200],
+                        backgroundColor: Colors.grey[700],
                       ),
                     )
                     .toList(),
