@@ -103,7 +103,7 @@ class LoginView extends GetView<LoginController> {
             ),
             const SizedBox(height: 24),
             Obx(
-              () => ElevatedButton(
+                  () => ElevatedButton(
                 onPressed: controller.isLoading.value ? null : controller.login,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.cyanAccent, // Button background color
@@ -116,19 +116,21 @@ class LoginView extends GetView<LoginController> {
                     vertical: 12,
                   ), // Optional padding
                   disabledBackgroundColor:
-                      Colors.grey, // Color when button is disabled
+                  Colors.grey, // Color when button is disabled
                 ),
                 child:
-                    controller.isLoading.value
-                        ? SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2.0,
-                          ),
-                        )
-                        : const Text('Login'),
+                controller.isLoading.value
+                    ? SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2.0,
+                  ),
+                )
+                    : const Text('Login',style: TextStyle(
+                    color: Colors.black
+                ),),
               ),
             ),
             const SizedBox(height: 16),
