@@ -30,41 +30,96 @@ class MealPlanService {
   // Get meal plans created by a specific trainer
   Future<List<MealPlanModel>> getTrainerMealPlans(int trainerId) async {
     try {
+      print(
+        'DEBUG MealPlanService: Fetching trainer meal plans for trainer ID: $trainerId',
+      );
+      // Using general endpoint and filtering by trainerId in the code
+      final endpoint = '$apiUrl/meal-plans';
+      print('DEBUG MealPlanService: Using endpoint: $endpoint');
+
       final response = await http
           .get(
-            Uri.parse('$apiUrl/meal-plans/trainer/$trainerId'),
+            Uri.parse(endpoint),
             headers: {'Content-Type': 'application/json'},
           )
           .timeout(const Duration(seconds: 10));
 
+      print(
+        'DEBUG MealPlanService: Get trainer meal plans - Status code: ${response.statusCode}',
+      );
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
-        return data.map((json) => MealPlanModel.fromJson(json)).toList();
+        print(
+          'DEBUG MealPlanService: Received ${data.length} total meal plans, filtering for trainer ID $trainerId',
+        );
+
+        // Filter meal plans by trainerId to get only those created by this trainer
+        final trainerPlans =
+            data
+                .map((json) => MealPlanModel.fromJson(json))
+                .where((plan) => plan.trainerId == trainerId)
+                .toList();
+
+        print(
+          'DEBUG MealPlanService: Found ${trainerPlans.length} meal plans for trainer ID $trainerId',
+        );
+
+        return trainerPlans;
       } else {
+        print(
+          'DEBUG MealPlanService: Failed to load trainer meal plans - Status: ${response.statusCode}, Body: ${response.body}',
+        );
         throw Exception('Failed to load trainer meal plans');
       }
     } catch (e) {
+      print('DEBUG MealPlanService: Error fetching trainer meal plans: $e');
       throw Exception('Error fetching trainer meal plans: ${e.toString()}');
     }
-  }
+  } // Get meal plans assigned to a specific client
 
-  // Get meal plans assigned to a specific client
   Future<List<MealPlanModel>> getClientMealPlans(int clientId) async {
     try {
+      print(
+        'DEBUG MealPlanService: Fetching client meal plans for client ID: $clientId',
+      );
+      // Using general endpoint and filtering by assigned clients in the code
+      final endpoint = '$apiUrl/meal-plans';
+      print('DEBUG MealPlanService: Using endpoint: $endpoint');
+
       final response = await http
           .get(
-            Uri.parse('$apiUrl/meal-plans/client/$clientId'),
+            Uri.parse(endpoint),
             headers: {'Content-Type': 'application/json'},
           )
           .timeout(const Duration(seconds: 10));
 
+      print(
+        'DEBUG MealPlanService: Get client meal plans - Status code: ${response.statusCode}',
+      );
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
-        return data.map((json) => MealPlanModel.fromJson(json)).toList();
+        print(
+          'DEBUG MealPlanService: Received ${data.length} total meal plans',
+        );
+
+        // In a real app with proper client-trainer assignments,
+        // we would filter for plans assigned to this client
+        // For development purposes, we'll show all meal plans
+        final plans = data.map((json) => MealPlanModel.fromJson(json)).toList();
+
+        print(
+          'DEBUG MealPlanService: Returning ${plans.length} meal plans for client ID $clientId',
+        );
+
+        return plans;
       } else {
+        print(
+          'DEBUG MealPlanService: Failed to load client meal plans - Status: ${response.statusCode}, Body: ${response.body}',
+        );
         throw Exception('Failed to load client meal plans');
       }
     } catch (e) {
+      print('DEBUG MealPlanService: Error fetching client meal plans: $e');
       throw Exception('Error fetching client meal plans: ${e.toString()}');
     }
   }

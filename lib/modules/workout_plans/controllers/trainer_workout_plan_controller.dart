@@ -43,37 +43,65 @@ class TrainerWorkoutPlanController extends GetxController {
     try {
       isLoading.value = true;
       hasError.value = false;
-      errorMessage.value = '';
-
-      // Check if user is logged in and has an ID
+      errorMessage.value = ''; // Check if user is logged in and has an ID
       final user = _authService.userModel;
       if (user != null && user.id > 0) {
+        print('DEBUG TrainerWorkoutPlanController: User ID found: ${user.id}');
         try {
           // Fetch workout plans created by this trainer
+          print(
+            'DEBUG TrainerWorkoutPlanController: Fetching workout plans for trainer ID: ${user.id}',
+          );
           final plans = await _workoutService.getTrainerWorkoutPlans(user.id);
           workoutPlans.value = plans;
 
-          // If no plans are returned from API, use sample data for testing
-          if (workoutPlans.isEmpty) {
-            _loadSampleData();
-          }
-        } catch (e) {
-          print('Error fetching trainer workout plans: $e');
-          // Fallback to all workout plans if trainer-specific endpoint fails
-          final plans = await _workoutService.getAllWorkoutPlans();
-          workoutPlans.value = plans;
+          print(
+            'DEBUG TrainerWorkoutPlanController: Fetched ${plans.length} workout plans',
+          );
 
-          if (workoutPlans.isEmpty) {
-            _loadSampleData();
+          // Log details about the loaded workout plans
+          logWorkoutPlansStatus();
+        } catch (e) {
+          print(
+            'DEBUG TrainerWorkoutPlanController: Error fetching trainer workout plans: $e',
+          );
+
+          // Try to get all workout plans if trainer-specific endpoint fails
+          print(
+            'DEBUG TrainerWorkoutPlanController: Falling back to fetching all workout plans',
+          );
+          try {
+            final plans = await _workoutService.getAllWorkoutPlans();
+            workoutPlans.value = plans;
+            print(
+              'DEBUG TrainerWorkoutPlanController: Fetched ${plans.length} workout plans from fallback',
+            );
+          } catch (fallbackError) {
+            print(
+              'DEBUG TrainerWorkoutPlanController: Fallback also failed: $fallbackError',
+            );
+            hasError.value = true;
+            errorMessage.value = 'Failed to load workout plans: $fallbackError';
           }
         }
       } else {
-        // No user ID available, fallback to getting all workout plans
-        final plans = await _workoutService.getAllWorkoutPlans();
-        workoutPlans.value = plans;
-
-        if (workoutPlans.isEmpty) {
-          _loadSampleData();
+        print('DEBUG TrainerWorkoutPlanController: No user ID available');
+        // No user ID available, try to get all workout plans
+        try {
+          print(
+            'DEBUG TrainerWorkoutPlanController: Fetching all workout plans',
+          );
+          final plans = await _workoutService.getAllWorkoutPlans();
+          workoutPlans.value = plans;
+          print(
+            'DEBUG TrainerWorkoutPlanController: Fetched ${plans.length} workout plans',
+          );
+        } catch (e) {
+          print(
+            'DEBUG TrainerWorkoutPlanController: Error fetching all workout plans: $e',
+          );
+          hasError.value = true;
+          errorMessage.value = 'Failed to load workout plans: $e';
         }
       }
 
@@ -228,91 +256,21 @@ class TrainerWorkoutPlanController extends GetxController {
   void selectWorkoutPlan(WorkoutPlanModel plan) {
     print('DEBUG: Selected workout plan: ${plan.title}');
     selectedPlan.value = plan;
-  }
+  } // Helper method to display workout plans status
 
-  void _loadSampleData() {
-    workoutPlans.value = [
-      WorkoutPlanModel(
-        id: 1,
-        userId: 1,
-        title: 'Ultimate Upper Body',
-        description:
-            'A comprehensive workout focusing on chest, shoulders, back and arms.',
-        category: 'Upper Body',
-        duration: 45,
-        difficulty: 'Intermediate',
-        imageUrl: 'assets/images/workout.png',
-        exercises: [
-          Exercise(
-            name: 'Bench Press',
-            description:
-                'Lie on a bench and press the weight upward until your arms are extended.',
-            sets: 3,
-            reps: 12,
-            restTime: 60,
-            imageUrl: 'assets/images/workout.png',
-          ),
-          Exercise(
-            name: 'Pull-ups',
-            description:
-                'Hang from a bar with palms facing away and pull your body up until chin over bar.',
-            sets: 3,
-            reps: 8,
-            restTime: 60,
-            imageUrl: 'assets/images/workout.png',
-          ),
-          Exercise(
-            name: 'Shoulder Press',
-            description:
-                'Press weights from shoulder height until your arms are fully extended overhead.',
-            sets: 3,
-            reps: 10,
-            restTime: 60,
-            imageUrl: 'assets/images/workout.png',
-          ),
-        ],
-      ),
-      WorkoutPlanModel(
-        id: 2,
-        userId: 2,
-        title: 'Leg Day Champion',
-        category: 'Lower Body',
-        description:
-            'Build stronger legs with this lower body focused workout routine.',
-        duration: 50,
-        difficulty: 'Advanced',
-        imageUrl: 'assets/images/Workout_plan.jpg',
-        exercises: [
-          Exercise(
-            name: 'Squats',
-            description:
-                'Stand with feet shoulder-width apart, lower your body as if sitting in a chair.',
-            sets: 4,
-            reps: 12,
-            restTime: 90,
-            imageUrl: 'assets/images/workout.png',
-          ),
-          Exercise(
-            name: 'Lunges',
-            description:
-                'Step forward with one leg and lower your hips until both knees are bent at 90 degrees.',
-            sets: 3,
-            reps: 10,
-            restTime: 60,
-            imageUrl: 'assets/images/workout.png',
-          ),
-          Exercise(
-            name: 'Deadlifts',
-            description:
-                'Bend at hips and knees to lower down and grab the bar, then return to standing.',
-            sets: 4,
-            reps: 8,
-            restTime: 90,
-            imageUrl: 'assets/images/workout.png',
-          ),
-        ],
-      ),
-    ];
+  void logWorkoutPlansStatus() {
+    if (workoutPlans.isEmpty) {
+      print('DEBUG TrainerWorkoutPlanController: No workout plans available');
+    } else {
+      print(
+        'DEBUG TrainerWorkoutPlanController: ${workoutPlans.length} workout plans loaded',
+      );
+      for (var plan in workoutPlans) {
+        print(
+          'DEBUG TrainerWorkoutPlanController: Plan - ${plan.title}, Category: ${plan.category}',
+        );
+      }
+    }
   }
 
   // Getter for filtered workout plans based on selected category

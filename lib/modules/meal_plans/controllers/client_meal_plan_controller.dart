@@ -43,32 +43,59 @@ class ClientMealPlanController extends GetxController {
       // Check if user is logged in and has an ID
       final user = _authService.userModel;
       if (user != null && user.id > 0) {
+        print('DEBUG ClientMealPlanController: User ID found: ${user.id}');
         try {
           // Fetch meal plans assigned to this client
+          print(
+            'DEBUG ClientMealPlanController: Fetching meal plans for client ID: ${user.id}',
+          );
           final plans = await _mealPlanService.getClientMealPlans(user.id);
           mealPlans.value = plans;
+          print(
+            'DEBUG ClientMealPlanController: Fetched ${plans.length} meal plans for client',
+          );
 
-          // If no plans are returned from API, use sample data for testing
-          if (mealPlans.isEmpty) {
-            _loadSampleData();
-          }
+          // Log details about the loaded meal plans
+          logMealPlansStatus();
         } catch (e) {
-          print('Error fetching client meal plans: $e');
-          // Fallback to all meal plans if client-specific endpoint fails
-          final plans = await _mealPlanService.getAllMealPlans();
-          mealPlans.value = plans;
+          print(
+            'DEBUG ClientMealPlanController: Error fetching client meal plans: $e',
+          );
 
-          if (mealPlans.isEmpty) {
-            _loadSampleData();
+          // Fallback to all meal plans if client-specific endpoint fails
+          print(
+            'DEBUG ClientMealPlanController: Falling back to fetching all meal plans',
+          );
+          try {
+            final plans = await _mealPlanService.getAllMealPlans();
+            mealPlans.value = plans;
+            print(
+              'DEBUG ClientMealPlanController: Fetched ${plans.length} meal plans from fallback',
+            );
+          } catch (fallbackError) {
+            print(
+              'DEBUG ClientMealPlanController: Fallback also failed: $fallbackError',
+            );
+            hasError.value = true;
+            errorMessage.value = 'Failed to load meal plans: $fallbackError';
           }
         }
       } else {
+        print('DEBUG ClientMealPlanController: No user ID available');
         // No user ID available, fallback to getting all meal plans
-        final plans = await _mealPlanService.getAllMealPlans();
-        mealPlans.value = plans;
-
-        if (mealPlans.isEmpty) {
-          _loadSampleData();
+        try {
+          print('DEBUG ClientMealPlanController: Fetching all meal plans');
+          final plans = await _mealPlanService.getAllMealPlans();
+          mealPlans.value = plans;
+          print(
+            'DEBUG ClientMealPlanController: Fetched ${plans.length} meal plans',
+          );
+        } catch (e) {
+          print(
+            'DEBUG ClientMealPlanController: Error fetching all meal plans: $e',
+          );
+          hasError.value = true;
+          errorMessage.value = 'Failed to load meal plans: $e';
         }
       }
 
@@ -123,6 +150,25 @@ class ClientMealPlanController extends GetxController {
     }
   }
 
+  // Helper method to display meal plans status
+  void logMealPlansStatus() {
+    if (mealPlans.isEmpty) {
+      print(
+        'DEBUG ClientMealPlanController: No meal plans available for this client',
+      );
+    } else {
+      print(
+        'DEBUG ClientMealPlanController: ${mealPlans.length} meal plans assigned',
+      );
+      for (var plan in mealPlans) {
+        print(
+          'DEBUG ClientMealPlanController: Plan - ${plan.title}, Category: ${plan.category}',
+        );
+      }
+    }
+  }
+
+  // This method is kept for reference but no longer used
   void _loadSampleData() {
     mealPlans.value = [
       MealPlanModel(

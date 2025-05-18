@@ -4,6 +4,8 @@ import '../../../services/auth_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../meal_plans/controllers/client_meal_plan_controller.dart';
 import '../../meal_plans/controllers/trainer_meal_plan_controller.dart';
+import '../../workout_plans/controllers/client_workout_plan_controller.dart';
+import '../../workout_plans/controllers/trainer_workout_plan_controller.dart';
 import '../../../models/user_model.dart';
 
 class MainDashboardController extends GetxController {
@@ -28,11 +30,23 @@ class MainDashboardController extends GetxController {
       if (!Get.isRegistered<ClientMealPlanController>()) {
         Get.put(ClientMealPlanController());
       }
+      if (!Get.isRegistered<ClientWorkoutPlanController>()) {
+        Get.put(ClientWorkoutPlanController());
+        print(
+          'DEBUG: ClientWorkoutPlanController registered in MainDashboardController',
+        );
+      }
     }
     // Register trainer controllers if user is a trainer
     else {
       if (!Get.isRegistered<TrainerMealPlanController>()) {
         Get.put(TrainerMealPlanController());
+      }
+      if (!Get.isRegistered<TrainerWorkoutPlanController>()) {
+        Get.put(TrainerWorkoutPlanController());
+        print(
+          'DEBUG: TrainerWorkoutPlanController registered in MainDashboardController',
+        );
       }
     }
   }

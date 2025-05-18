@@ -47,14 +47,59 @@ class TrainerMealPlanController extends GetxController {
     try {
       isLoading.value = true;
 
-      // In a real app, you would fetch plans created by the current trainer
-      // For now, we'll fetch all meal plans
-      final plans = await _mealPlanService.getAllMealPlans();
-      mealPlans.value = plans;
+      // Check if user is logged in and has an ID
+      final user = _authService.userModel;
+      if (user != null && user.id > 0) {
+        print('DEBUG TrainerMealPlanController: User ID found: ${user.id}');
+        try {
+          // Fetch meal plans created by this trainer
+          print(
+            'DEBUG TrainerMealPlanController: Fetching meal plans for trainer ID: ${user.id}',
+          );
+          final plans = await _mealPlanService.getTrainerMealPlans(user.id);
+          mealPlans.value = plans;
+          print(
+            'DEBUG TrainerMealPlanController: Fetched ${plans.length} meal plans for trainer',
+          );
 
-      // If no plans are returned from API, use sample data for testing
-      if (mealPlans.isEmpty) {
-        _loadSampleData();
+          // Log details about the loaded meal plans
+          logMealPlansStatus();
+        } catch (e) {
+          print(
+            'DEBUG TrainerMealPlanController: Error fetching trainer meal plans: $e',
+          );
+
+          // Fallback to all meal plans if trainer-specific endpoint fails
+          print(
+            'DEBUG TrainerMealPlanController: Falling back to fetching all meal plans',
+          );
+          try {
+            final plans = await _mealPlanService.getAllMealPlans();
+            mealPlans.value = plans;
+            print(
+              'DEBUG TrainerMealPlanController: Fetched ${plans.length} meal plans from fallback',
+            );
+          } catch (fallbackError) {
+            print(
+              'DEBUG TrainerMealPlanController: Fallback also failed: $fallbackError',
+            );
+          }
+        }
+      } else {
+        print('DEBUG TrainerMealPlanController: No user ID available');
+        // No user ID available, fallback to getting all meal plans
+        try {
+          print('DEBUG TrainerMealPlanController: Fetching all meal plans');
+          final plans = await _mealPlanService.getAllMealPlans();
+          mealPlans.value = plans;
+          print(
+            'DEBUG TrainerMealPlanController: Fetched ${plans.length} meal plans',
+          );
+        } catch (e) {
+          print(
+            'DEBUG TrainerMealPlanController: Error fetching all meal plans: $e',
+          );
+        }
       }
 
       isLoading.value = false;
@@ -68,7 +113,25 @@ class TrainerMealPlanController extends GetxController {
     // In a real app, fetch clients assigned to this trainer
     // This is a placeholder
   }
+  // Helper method to display meal plans status
+  void logMealPlansStatus() {
+    if (mealPlans.isEmpty) {
+      print(
+        'DEBUG TrainerMealPlanController: No meal plans available for this trainer',
+      );
+    } else {
+      print(
+        'DEBUG TrainerMealPlanController: ${mealPlans.length} meal plans loaded',
+      );
+      for (var plan in mealPlans) {
+        print(
+          'DEBUG TrainerMealPlanController: Plan - ${plan.title}, Category: ${plan.category}',
+        );
+      }
+    }
+  }
 
+  // This method is kept for reference but no longer used
   void _loadSampleData() {
     mealPlans.value = [
       MealPlanModel(
