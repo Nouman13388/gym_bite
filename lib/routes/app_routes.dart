@@ -6,6 +6,7 @@ abstract class Routes {
   static const LOGIN = '/login';
   static const REGISTER = '/register';
   static const PROFILE = '/profile';
+  static const MAIN_DASHBOARD = '/main_dashboard';
 
   // Client routes
   static const CLIENT_DASHBOARD = '/client_dashboard';

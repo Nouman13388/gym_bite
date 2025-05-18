@@ -12,56 +12,6 @@ class TrainerDashboardView extends GetView<DashboardController> {
     String formattedDate =
         "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        elevation: 0,
-        title: Padding(
-          padding: EdgeInsets.only(top: 24.0),
-          child: Image.asset(
-            'assets/images/gymBite logo.png',
-            height: 50, // adjust based on your image size
-          ),
-        ),
-        actions: [
-          SizedBox(height: 10),
-          Padding(
-            padding: EdgeInsets.only(top: 24.0),
-            child: IconButton(
-              icon: Icon(Icons.logout, color: Colors.white),
-              onPressed: () {
-                // Show confirmation dialog
-                Get.dialog(
-                  AlertDialog(
-                    title: Text('Logout'),
-                    content: Text('Are you sure you want to logout?'),
-                    actions: [
-                      TextButton(
-                        child: Text('Cancel'),
-                        onPressed: () => Get.back(),
-                      ),
-                      TextButton(
-                        child: Text('Logout'),
-                        onPressed: () {
-                          controller.signOut();
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 24.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white24,
-              child: Icon(Icons.person, color: Colors.white),
-            ),
-          ),
-          SizedBox(width: 25),
-        ],
-      ),
       backgroundColor: Colors.black,
       body: SafeArea(
         child: ListView(

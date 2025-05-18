@@ -21,13 +21,8 @@ class LoginController extends GetxController {
         debugPrint('AuthService userModel: ${authService.userModel?.toJson()}');
         if (user != null) {
           debugPrint('User role: ${user.role}');
-          if (user.isTrainer) {
-            debugPrint('Trainer Dashboard');
-            Get.offAllNamed(Routes.TRAINER_DASHBOARD);
-          } else {
-            debugPrint('Client Dashboard');
-            Get.offAllNamed(Routes.CLIENT_DASHBOARD);
-          }
+          // Navigate to the main dashboard which will handle role-specific views
+          Get.offAllNamed(Routes.MAIN_DASHBOARD);
         }
       }
     } catch (e) {

@@ -1,15 +1,20 @@
 import 'package:get/get.dart';
 import '../modules/auth/views/login_view.dart';
 import '../modules/auth/views/register_view.dart';
-import '../modules/dashboard/bindings/client_dashboard_binding.dart' as bindings;
+import '../modules/dashboard/bindings/client_dashboard_binding.dart'
+    as bindings;
 import '../modules/dashboard/bindings/trainer_dashboard_binding.dart';
+import '../modules/dashboard/bindings/main_dashboard_binding.dart';
 import '../modules/dashboard/views/client_dashboard_view.dart';
 import '../modules/dashboard/views/trainer_dashboard_view.dart';
+import '../modules/dashboard/views/client_main_dashboard_view.dart';
+import '../modules/dashboard/views/trainer_main_dashboard_view.dart';
 import '../modules/meal_plans/bindings/meal_plan_binding.dart';
 import '../modules/meal_plans/views/meal_plan_details_view.dart';
 import '../modules/meal_plans/views/meal_plan_selection_view.dart';
 import '../modules/meal_plans/views/meal_plan_overview_view.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../services/auth_service.dart';
 
 part 'app_routes.dart';
 
@@ -51,6 +56,17 @@ class AppPages {
       name: Routes.TRAINER_DASHBOARD,
       page: () => const TrainerDashboardView(),
       binding: TrainerDashboardBinding(),
+    ),
+    GetPage(
+      name: Routes.MAIN_DASHBOARD,
+      page: () {
+        final authService = Get.find<AuthService>();
+        final isTrainer = authService.userModel?.isTrainer ?? false;
+        return isTrainer
+            ? const TrainerMainDashboardView()
+            : const ClientMainDashboardView();
+      },
+      binding: MainDashboardBinding(),
     ),
   ];
 }
