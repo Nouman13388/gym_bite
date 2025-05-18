@@ -82,16 +82,6 @@ class AppPages {
       binding: WorkoutPlanBindings(),
     ),
     GetPage(
-      name: Routes.CLIENT_WORKOUT_PLANS,
-      page: () => const ClientWorkoutPlanView(),
-      binding: WorkoutPlanBindings(),
-    ),
-    GetPage(
-      name: Routes.TRAINER_WORKOUT_PLANS,
-      page: () => const TrainerWorkoutPlanView(),
-      binding: WorkoutPlanBindings(),
-    ),
-    GetPage(
       name: Routes.CLIENT_DASHBOARD,
       page: () => const ClientDashboardView(),
       binding: bindings.ClientDashboardBinding(),

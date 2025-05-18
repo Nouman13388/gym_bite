@@ -17,76 +17,84 @@ class ClientMainDashboardView extends GetView<MainDashboardController> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         surfaceTintColor: Colors.transparent,
-        centerTitle: true,
         elevation: 0,
+        centerTitle: false, // Set to false to use custom centering
         title: Padding(
           padding: const EdgeInsets.only(top: 24.0),
-          child: Image.asset('assets/images/gymBite logo.png', height: 50),
-        ),
-        actions: [
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: IconButton(
-              icon: const Icon(Icons.logout, color: Colors.white),
-              onPressed: () {
-                // Show confirmation dialog
-                Get.dialog(
-                  AlertDialog(
-                    title: const Text('Logout'),
-                    content: const Text('Are you sure you want to logout?'),
-                    actions: [
-                      TextButton(
-                        child: const Text('Cancel'),
-                        onPressed: () => Get.back(),
-                      ),
-                      TextButton(
-                        child: const Text('Logout'),
-                        onPressed: () {
-                          controller.signOut();
-                        },
-                      ),
-                    ],
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // 👤 Avatar - Left
+              Obx(
+                () => GestureDetector(
+                  onTap: () {
+                    final user = controller.user.value;
+                    if (user != null) {
+                      Get.snackbar(
+                        'Client Account',
+                        'Name: ${user.name}\nEmail: ${user.email}',
+                        snackPosition: SnackPosition.BOTTOM,
+                        duration: const Duration(seconds: 3),
+                        backgroundColor: Colors.black54,
+                        colorText: Colors.white,
+                      );
+                    }
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white24,
+                    child:
+                        controller.user.value?.name != null
+                            ? Text(
+                              controller.user.value!.name[0].toUpperCase(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                            : const Icon(Icons.person, color: Colors.white),
                   ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 24.0, right: 10.0),
-            child: Obx(
-              () => GestureDetector(
-                onTap: () {
-                  // Show user info when tapping the avatar
-                  final user = controller.user.value;
-                  if (user != null) {
-                    Get.snackbar(
-                      'Client Account',
-                      'Name: ${user.name}\nEmail: ${user.email}',
-                      snackPosition: SnackPosition.BOTTOM,
-                      duration: const Duration(seconds: 3),
-                      backgroundColor: Colors.black54,
-                      colorText: Colors.white,
-                    );
-                  }
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.white24,
-                  child:
-                      controller.user.value?.name != null
-                          ? Text(
-                            controller.user.value!.name[0].toUpperCase(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                          : const Icon(Icons.person, color: Colors.white),
                 ),
               ),
-            ),
+
+              const SizedBox(width: 12),
+
+              // 🖼 Centered Logo
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/gymBite logo.png',
+                    height: 50,
+                  ),
+                ),
+              ),
+
+              // 🚪 Logout - Right
+              IconButton(
+                icon: const Icon(Icons.logout, color: Colors.white),
+                onPressed: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: const Text('Logout'),
+                      content: const Text('Are you sure you want to logout?'),
+                      actions: [
+                        TextButton(
+                          child: const Text('Cancel'),
+                          onPressed: () => Get.back(),
+                        ),
+                        TextButton(
+                          child: const Text('Logout'),
+                          onPressed: () {
+                            controller.signOut();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       body: Obx(() => _buildBody()),
       bottomNavigationBar: Obx(
