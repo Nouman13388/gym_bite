@@ -3,7 +3,7 @@ class AppConstants {
   static const String appVersion = '1.0.0';
 
   // API Endpoints
-  static const String baseUrl = 'http://13.61.146.2:3000/api';
+  static const String baseUrl = 'https://gymbite-backend.vercel.app/api';
   static const String userEndpoint = '$baseUrl/users';
   static const String clientEndpoint = '$baseUrl/clients';
   static const String trainerEndpoint = '$baseUrl/trainers';
