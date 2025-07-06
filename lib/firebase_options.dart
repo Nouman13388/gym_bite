@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -46,30 +47,36 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB8bCKbMmjkQSTuQAyeUlbi6trYeimPhZQ',
-    appId: '1:480367101608:web:5a52d7e37da605c116649d',
-    messagingSenderId: '480367101608',
-    projectId: 'gymbite',
-    authDomain: 'gymbite.firebaseapp.com',
-    storageBucket: 'gymbite.firebasestorage.app',
-    measurementId: 'G-2BLEB19198',
-  );
+  static FirebaseOptions get web {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
+      appId: dotenv.env['FIREBASE_WEB_APP_ID'] ?? '',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+      authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN'] ?? '',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
+      measurementId: dotenv.env['FIREBASE_WEB_MEASUREMENT_ID'] ?? '',
+    );
+  }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD4U_M7HsyF6RIPPq-R-rgQU5_29h5qmik',
-    appId: '1:480367101608:android:e280049a5cc3657c16649d',
-    messagingSenderId: '480367101608',
-    projectId: 'gymbite',
-    storageBucket: 'gymbite.firebasestorage.app',
-  );
+  static FirebaseOptions get android {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_ANDROID_API_KEY'] ?? '',
+      appId: dotenv.env['FIREBASE_ANDROID_APP_ID'] ?? '',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
+    );
+  }
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCIxa1yRPaSJw-WUjTcF0xPebtfh_HnhXs',
-    appId: '1:480367101608:ios:1c65a5133d57ca6a16649d',
-    messagingSenderId: '480367101608',
-    projectId: 'gymbite',
-    storageBucket: 'gymbite.firebasestorage.app',
-    iosBundleId: 'com.nomdevs.gymBite',
-  );
+  static FirebaseOptions get ios {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_IOS_API_KEY'] ?? '',
+      appId: dotenv.env['FIREBASE_IOS_APP_ID'] ?? '',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
+      iosBundleId: dotenv.env['FIREBASE_IOS_BUNDLE_ID'] ?? '',
+    );
+  }
 }

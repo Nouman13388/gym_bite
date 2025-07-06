@@ -1,44 +1,46 @@
+import '../config/environment_config.dart';
+
 class AppConstants {
   static const String appName = 'GymBite';
   static const String appVersion = '1.0.0';
 
   // API Endpoints
-  static const String baseUrl = 'https://gymbite-backend.vercel.app/api';
-  static const String userEndpoint = '$baseUrl/users';
-  static const String clientEndpoint = '$baseUrl/clients';
-  static const String trainerEndpoint = '$baseUrl/trainers';
-  static const String appointmentEndpoint = '$baseUrl/appointments';
-  static const String feedbackEndpoint = '$baseUrl/feedbacks';
-  static const String consultationEndpoint = '$baseUrl/consultations';
-  static const String mealPlanEndpoint = '$baseUrl/meal-plans';
-  static const String workoutPlanEndpoint = '$baseUrl/workout-plans';
-  static const String progressEndpoint = '$baseUrl/progress';
-  static const String authEndpoint = '$baseUrl/auth';
+  static String get baseUrl => EnvironmentConfig.apiBaseUrl;
+  static final String userEndpoint = '$baseUrl/users';
+  static final String clientEndpoint = '$baseUrl/clients';
+  static final String trainerEndpoint = '$baseUrl/trainers';
+  static final String appointmentEndpoint = '$baseUrl/appointments';
+  static final String feedbackEndpoint = '$baseUrl/feedbacks';
+  static final String consultationEndpoint = '$baseUrl/consultations';
+  static final String mealPlanEndpoint = '$baseUrl/meal-plans';
+  static final String workoutPlanEndpoint = '$baseUrl/workout-plans';
+  static final String progressEndpoint = '$baseUrl/progress';
+  static final String authEndpoint = '$baseUrl/auth';
 
   // Extended Client Endpoints
-  static const String clientCompleteProfileEndpoint =
+  static final String clientCompleteProfileEndpoint =
       '$baseUrl/clients/{id}/complete';
-  static const String clientPlansEndpoint = '$baseUrl/clients/{id}/plans';
-  static const String clientProgressEndpoint = '$baseUrl/clients/{id}/progress';
-  static const String clientActivitiesEndpoint =
+  static final String clientPlansEndpoint = '$baseUrl/clients/{id}/plans';
+  static final String clientProgressEndpoint = '$baseUrl/clients/{id}/progress';
+  static final String clientActivitiesEndpoint =
       '$baseUrl/clients/{id}/activities';
 
   // Extended Trainer Endpoints
-  static const String trainerCompleteProfileEndpoint =
+  static final String trainerCompleteProfileEndpoint =
       '$baseUrl/trainers/{id}/complete';
-  static const String trainerClientsEndpoint = '$baseUrl/trainers/{id}/clients';
-  static const String trainerScheduleEndpoint =
+  static final String trainerClientsEndpoint = '$baseUrl/trainers/{id}/clients';
+  static final String trainerScheduleEndpoint =
       '$baseUrl/trainers/{id}/schedule';
-  static const String trainerMetricsEndpoint = '$baseUrl/trainers/{id}/metrics';
+  static final String trainerMetricsEndpoint = '$baseUrl/trainers/{id}/metrics';
 
   // Route Names
-  static const String splashRoute = '/splash';
-  static const String loginRoute = '/login';
-  static const String registerRoute = '/register';
-  static const String dashboardRoute = '/dashboard';
-  static const String profileRoute = '/profile';
-  static const String plansRoute = '/plans';
-  static const String appointmentsRoute = '/appointments';
-  static const String chatRoute = '/chat';
-  static const String feedbackRoute = '/feedback';
+  static final String splashRoute = '/splash';
+  static final String loginRoute = '/login';
+  static final String registerRoute = '/register';
+  static final String dashboardRoute = '/dashboard';
+  static final String profileRoute = '/profile';
+  static final String plansRoute = '/plans';
+  static final String appointmentsRoute = '/appointments';
+  static final String chatRoute = '/chat';
+  static final String feedbackRoute = '/feedback';
 }

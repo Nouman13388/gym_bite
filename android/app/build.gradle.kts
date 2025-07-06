@@ -10,7 +10,7 @@ plugins {
 
 android {    namespace = "com.nomdevs.gym_bite"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "29.0.13113456" // Updated to use the installed NDK version
+    ndkVersion = "29.0.13113456" // Ensure this matches the installed NDK version
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
