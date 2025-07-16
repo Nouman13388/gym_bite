@@ -128,11 +128,3 @@ class WorkoutPlanDetailsView extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(
-    const MaterialApp(
-      home: WorkoutPlanDetailsView(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}

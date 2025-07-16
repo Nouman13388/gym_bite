@@ -64,12 +64,3 @@ class MealPlanSelectionView extends GetView<MealPlanController> {
     );
   }
 }
-
-void main() {
-  runApp(
-    const MaterialApp(
-      home: MealPlanSelectionView(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}

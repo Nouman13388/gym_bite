@@ -6,6 +6,7 @@ import '../../../routes/app_pages.dart';
 import '../../../core/constants/app_constants.dart';
 
 class RegisterController extends GetxController {
+  final isLoading = false.obs;
   final nameController = ''.obs;
   final emailController = ''.obs;
   final passwordController = ''.obs;
@@ -20,6 +21,7 @@ class RegisterController extends GetxController {
   final AuthService authService = Get.find<AuthService>();
 
   Future<void> register() async {
+    isLoading.value = true;
     // Check if user exists in backend
     final checkResponse = await http.get(
       Uri.parse('${AppConstants.userEndpoint}/email/${emailController.value}'),
@@ -33,6 +35,7 @@ class RegisterController extends GetxController {
           'Email is already registered. Please login or recover your account.',
           snackPosition: SnackPosition.BOTTOM,
         );
+        isLoading.value = false;
         return;
       }
     }
@@ -66,6 +69,7 @@ class RegisterController extends GetxController {
                 'Failed to register trainer.',
                 snackPosition: SnackPosition.BOTTOM,
               );
+              isLoading.value = false;
               return;
             }
           } else {
@@ -89,6 +93,7 @@ class RegisterController extends GetxController {
                 'Failed to register client.',
                 snackPosition: SnackPosition.BOTTOM,
               );
+              isLoading.value = false;
               return;
             }
           }
@@ -97,6 +102,7 @@ class RegisterController extends GetxController {
             'Registration successful! Please login.',
             snackPosition: SnackPosition.BOTTOM,
           );
+          isLoading.value = false;
           Get.offAllNamed(Routes.LOGIN);
         } catch (apiError) {
           Get.snackbar(
@@ -104,6 +110,7 @@ class RegisterController extends GetxController {
             'Failed to complete registration. Please try again.',
             snackPosition: SnackPosition.BOTTOM,
           );
+          isLoading.value = false;
         }
       } else {
         Get.snackbar(
@@ -111,6 +118,7 @@ class RegisterController extends GetxController {
           'Failed to create user in Firebase. Please try again.',
           snackPosition: SnackPosition.BOTTOM,
         );
+        isLoading.value = false;
       }
     } catch (e) {
       Get.snackbar(
@@ -118,6 +126,7 @@ class RegisterController extends GetxController {
         'An unexpected error occurred: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
+      isLoading.value = false;
     }
   }
 }

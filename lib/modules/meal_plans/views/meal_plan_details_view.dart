@@ -130,12 +130,3 @@ class MealPlanDetailsView extends GetView<MealPlanController> {
     );
   }
 }
-
-void main() {
-  runApp(
-    const MaterialApp(
-      home: MealPlanDetailsView(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}

@@ -241,12 +241,3 @@ class WorkoutCard extends StatelessWidget {
     );
   }
 }
-
-void main() {
-  runApp(
-    const MaterialApp(
-      home: WorkoutPlanSelectionView(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}

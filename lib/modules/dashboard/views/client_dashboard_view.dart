@@ -805,15 +805,3 @@ class ClientDashboardView extends GetView<ClientDashboardController> {
     );
   }
 }
-
-void main() {
-  // Manually inject the controller for testing
-  Get.put(ClientDashboardController());
-
-  runApp(
-    GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ClientDashboardView(), // Directly running the screen
-    ),
-  );
-}

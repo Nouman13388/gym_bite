@@ -96,11 +96,3 @@ class MealPlanOverviewView extends GetView<MealPlanController> {
   }
 }
 
-void main() {
-  runApp(
-    const MaterialApp(
-      home: MealPlanOverviewView(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}

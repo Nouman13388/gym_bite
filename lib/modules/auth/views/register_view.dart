@@ -15,10 +15,10 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(''),
-        titleTextStyle: TextStyle(
-          fontSize: 25,
-        ),),
+      appBar: AppBar(
+        title: const Text(''),
+        titleTextStyle: TextStyle(fontSize: 25),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -177,273 +177,334 @@ class RegisterView extends GetView<RegisterController> {
             ),
             const SizedBox(height: 16),
             Obx(
-                  () =>
-              controller.selectedRole.value == 'TRAINER'
-                  ? Column(
-                children: [
-                  TextField(
-                    onChanged:
-                        (val) =>
-                    controller.specialtyController.value = val,
-                    decoration: InputDecoration(
-                      labelText: 'Specialty',
-                      labelStyle: TextStyle(
-                        color: Colors.white, // Label color when not focused
+              () =>
+                  controller.selectedRole.value == 'TRAINER'
+                      ? Column(
+                        children: [
+                          TextField(
+                            onChanged:
+                                (val) =>
+                                    controller.specialtyController.value = val,
+                            decoration: InputDecoration(
+                              labelText: 'Specialty',
+                              labelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .white, // Label color when not focused
+                              ),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .cyanAccent, // Label color when focused (floating)
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: Colors.cyanAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged:
+                                (val) =>
+                                    controller.experienceYearsController.value =
+                                        val,
+                            decoration: InputDecoration(
+                              labelText: 'Experience (Years)',
+                              labelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .white, // Label color when not focused
+                              ),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .cyanAccent, // Label color when focused (floating)
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: Colors.cyanAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
+                      )
+                      : Column(
+                        children: [
+                          TextField(
+                            onChanged:
+                                (val) =>
+                                    controller.weightController.value = val,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.fitness_center_outlined),
+                              labelText: 'Weight (kg)',
+                              labelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .white, // Label color when not focused
+                              ),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .cyanAccent, // Label color when focused (floating)
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: Colors.cyanAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged:
+                                (val) =>
+                                    controller.heightController.value = val,
+                            decoration: InputDecoration(
+                              labelText: 'Height (cm)',
+                              prefixIcon: Icon(Icons.height_outlined),
+                              labelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .white, // Label color when not focused
+                              ),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .cyanAccent, // Label color when focused (floating)
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: Colors.cyanAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged:
+                                (val) => controller.bmiController.value = val,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.calculate_outlined),
+                              labelText: 'BMI',
+                              labelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .white, // Label color when not focused
+                              ),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .cyanAccent, // Label color when focused (floating)
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: Colors.cyanAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged:
+                                (val) =>
+                                    controller.fitnessGoalsController.value =
+                                        val,
+                            decoration: InputDecoration(
+                              labelText: 'Fitness Goals',
+                              prefixIcon: Icon(Icons.directions_run_outlined),
+                              labelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .white, // Label color when not focused
+                              ),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .cyanAccent, // Label color when focused (floating)
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: Colors.cyanAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            onChanged:
+                                (val) =>
+                                    controller
+                                        .dietaryPreferencesController
+                                        .value = val,
+                            decoration: InputDecoration(
+                              labelText: 'Dietary Preferences',
+                              prefixIcon: Icon(Icons.restaurant_menu_outlined),
+                              labelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .white, // Label color when not focused
+                              ),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    Colors
+                                        .cyanAccent, // Label color when focused (floating)
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: Colors.cyanAccent,
+                                  width: 2,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.cyanAccent, // Label color when focused (floating)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.cyanAccent, width: 2),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    onChanged:
-                        (val) =>
-                    controller.experienceYearsController.value =
-                        val,
-                    decoration: InputDecoration(
-                      labelText: 'Experience (Years)',
-                      labelStyle: TextStyle(
-                        color: Colors.white, // Label color when not focused
-                      ),
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.cyanAccent, // Label color when focused (floating)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.cyanAccent, width: 2),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ],
-              )
-                  : Column(
-                children: [
-                  TextField(
-                    onChanged:
-                        (val) =>
-                    controller.weightController.value = val,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.fitness_center_outlined),
-                      labelText: 'Weight (kg)',
-                      labelStyle: TextStyle(
-                        color: Colors.white, // Label color when not focused
-                      ),
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.cyanAccent, // Label color when focused (floating)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.cyanAccent, width: 2),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    onChanged:
-                        (val) =>
-                    controller.heightController.value = val,
-                    decoration: InputDecoration(
-                      labelText: 'Height (cm)',
-                      prefixIcon: Icon(Icons.height_outlined),
-                      labelStyle: TextStyle(
-                        color: Colors.white, // Label color when not focused
-                      ),
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.cyanAccent, // Label color when focused (floating)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.cyanAccent, width: 2),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    onChanged:
-                        (val) => controller.bmiController.value = val,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.calculate_outlined),
-                      labelText: 'BMI',
-                      labelStyle: TextStyle(
-                        color: Colors.white, // Label color when not focused
-                      ),
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.cyanAccent, // Label color when focused (floating)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.cyanAccent, width: 2),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    onChanged:
-                        (val) =>
-                    controller.fitnessGoalsController.value =
-                        val,
-                    decoration: InputDecoration(
-                      labelText: 'Fitness Goals',
-                      prefixIcon: Icon(Icons.directions_run_outlined),
-                      labelStyle: TextStyle(
-                        color: Colors.white, // Label color when not focused
-                      ),
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.cyanAccent, // Label color when focused (floating)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.cyanAccent, width: 2),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    onChanged:
-                        (val) =>
-                    controller
-                        .dietaryPreferencesController
-                        .value = val,
-                    decoration: InputDecoration(
-                      labelText: 'Dietary Preferences',
-                      prefixIcon: Icon(Icons.restaurant_menu_outlined),
-                      labelStyle: TextStyle(
-                        color: Colors.white, // Label color when not focused
-                      ),
-                      floatingLabelStyle: TextStyle(
-                        color: Colors.cyanAccent, // Label color when focused (floating)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.cyanAccent, width: 2),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: controller.register,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyanAccent, // Button background color
-                foregroundColor: Colors.white, // Text/icon color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20), // Rounded corners
+            Obx(
+              () => ElevatedButton(
+                onPressed:
+                    controller.isLoading.value ? null : controller.register,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.cyanAccent, // Button background color
+                  foregroundColor: Colors.white, // Text/icon color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Rounded corners
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ), // Optional padding
+                  disabledBackgroundColor:
+                      Colors.grey, // Color when button is disabled
                 ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 6,
-                ), // Optional padding
-                disabledBackgroundColor:
-                Colors.grey, // Color when button is disabled
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Text('Register',style: TextStyle(
-                    color: Colors.black
-                ),),
+                child:
+                    controller.isLoading.value
+                        ? SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.0,
+                          ),
+                        )
+                        : const Text(
+                          'Register',
+                          style: TextStyle(color: Colors.black),
+                        ),
               ),
             ),
             const SizedBox(height: 16),
             TextButton(
               onPressed: () => Get.back(),
-              child: const Text('Already have an account? Login',style: TextStyle(
-                  color: Colors.cyanAccent
-              ),),
+              child: const Text(
+                'Already have an account? Login',
+                style: TextStyle(color: Colors.cyanAccent),
+              ),
             ),
           ],
         ),
