@@ -5,8 +5,10 @@ import '../../../routes/app_pages.dart';
 import '../../../utils/auth_error_handler.dart';
 
 class LoginController extends GetxController {
-  final emailController = ''.obs;
-  final passwordController = ''.obs;
+  final formKey = GlobalKey<FormState>();
+  final passwordVisible = false.obs;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   final isLoading = false.obs;
   final AuthService authService = Get.find<AuthService>();
 
@@ -16,8 +18,8 @@ class LoginController extends GetxController {
     try {
       isLoading.value = true;
       final userCredential = await authService.signInWithEmailAndPassword(
-        emailController.value,
-        passwordController.value,
+        emailController.text,
+        passwordController.text,
       );
       if (userCredential != null) {
         final user = authService.userModel;
@@ -40,5 +42,12 @@ class LoginController extends GetxController {
     } finally {
       isLoading.value = false; // Reset loading state
     }
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 }

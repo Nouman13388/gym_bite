@@ -1,22 +1,25 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import '../../../services/auth_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../core/constants/app_constants.dart';
 
 class RegisterController extends GetxController {
+  final formKey = GlobalKey<FormState>();
+  final passwordVisible = false.obs;
   final isLoading = false.obs;
-  final nameController = ''.obs;
-  final emailController = ''.obs;
-  final passwordController = ''.obs;
-  final specialtyController = ''.obs;
-  final experienceYearsController = ''.obs;
-  final weightController = ''.obs;
-  final heightController = ''.obs;
-  final bmiController = ''.obs;
-  final fitnessGoalsController = ''.obs;
-  final dietaryPreferencesController = ''.obs;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final specialtyController = TextEditingController();
+  final experienceYearsController = TextEditingController();
+  final weightController = TextEditingController();
+  final heightController = TextEditingController();
+  final bmiController = TextEditingController();
+  final fitnessGoalsController = TextEditingController();
+  final dietaryPreferencesController = TextEditingController();
   final selectedRole = 'CLIENT'.obs;
   final AuthService authService = Get.find<AuthService>();
 
@@ -24,7 +27,7 @@ class RegisterController extends GetxController {
     isLoading.value = true;
     // Check if user exists in backend
     final checkResponse = await http.get(
-      Uri.parse('${AppConstants.userEndpoint}/email/${emailController.value}'),
+      Uri.parse('${AppConstants.userEndpoint}/email/${emailController.text}'),
       headers: {'Content-Type': 'application/json'},
     );
     if (checkResponse.statusCode == 200) {
@@ -42,9 +45,9 @@ class RegisterController extends GetxController {
     // Proceed with Firebase signup
     try {
       await authService.createUserWithEmailAndPassword(
-        emailController.value,
-        passwordController.value,
-        nameController.value,
+        emailController.text,
+        passwordController.text,
+        nameController.text,
         selectedRole.value,
       );
       final user = authService.userModel;
@@ -53,9 +56,9 @@ class RegisterController extends GetxController {
           if (selectedRole.value == 'TRAINER') {
             final trainerRequestBody = {
               'userId': user.id,
-              'specialty': specialtyController.value,
+              'specialty': specialtyController.text,
               'experienceYears':
-                  int.tryParse(experienceYearsController.value) ?? 0,
+                  int.tryParse(experienceYearsController.text) ?? 0,
             };
             final trainerResponse = await http.post(
               Uri.parse(AppConstants.trainerEndpoint),
@@ -75,11 +78,11 @@ class RegisterController extends GetxController {
           } else {
             final clientRequestBody = {
               'userId': user.id,
-              'weight': double.tryParse(weightController.value) ?? 0.0,
-              'height': double.tryParse(heightController.value) ?? 0.0,
-              'BMI': double.tryParse(bmiController.value) ?? 0.0,
-              'fitnessGoals': fitnessGoalsController.value,
-              'dietaryPreferences': dietaryPreferencesController.value,
+              'weight': double.tryParse(weightController.text) ?? 0.0,
+              'height': double.tryParse(heightController.text) ?? 0.0,
+              'BMI': double.tryParse(bmiController.text) ?? 0.0,
+              'fitnessGoals': fitnessGoalsController.text,
+              'dietaryPreferences': dietaryPreferencesController.text,
             };
             final clientResponse = await http.post(
               Uri.parse(AppConstants.clientEndpoint),
@@ -128,5 +131,20 @@ class RegisterController extends GetxController {
       );
       isLoading.value = false;
     }
+  }
+
+  @override
+  void onClose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    specialtyController.dispose();
+    experienceYearsController.dispose();
+    weightController.dispose();
+    heightController.dispose();
+    bmiController.dispose();
+    fitnessGoalsController.dispose();
+    dietaryPreferencesController.dispose();
+    super.onClose();
   }
 }
